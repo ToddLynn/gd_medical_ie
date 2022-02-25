@@ -139,8 +139,8 @@ def evaluate(args, eval_iter, model, mode):
     write_prediction_results(formatted_outputs, predict_file_path)
 
     if mode == "eval":
-        precision, recall, f1 = get_precision_recall_f1("./data/duie_dev.json",
-                                                        predict_file_path)
+        # precision, recall, f1 = get_precision_recall_f1("./data/duie_dev.json", predict_file_path)
+        precision, recall, f1 = get_precision_recall_f1("./data/kt_train_406.json", predict_file_path)
         return precision, recall, f1
     elif mode != "test":
         raise Exception("wrong mode for eval func")
@@ -176,10 +176,12 @@ def main():
     # Dataset & Dataloader
     train_dataset = DuIEDataset(args,
                                 # json_path="data/duie_train_4000.json",
-                                json_path="data/duie_train.json",
+                                # json_path="data/duie_train.json",
+                                json_path="data/kt_train_406.json",
                                 tokenizer=tokenizer)
     eval_dataset = DuIEDataset(args,
-                               json_path="./data/duie_dev.json",
+                               # json_path="./data/duie_dev.json",
+                               json_path="./data/kt_train_406.json",
                                tokenizer=tokenizer)
     # eval_dataset, test_dataset = random_split(eval_dataset,
     #                                           [round(0.5 * len(eval_dataset)),

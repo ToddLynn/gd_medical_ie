@@ -16,6 +16,7 @@ from torch.utils.data import Dataset
 
 from utils.finetuning_argparse import get_argparse
 
+
 class DuIEDataset(Dataset):
     def __init__(self, args, json_path, tokenizer):
         examples = []
@@ -37,7 +38,7 @@ class DuIEDataset(Dataset):
             spo_list = example['spo_list'] if "spo_list" in example.keys() else []
 
             text_raw = example['text']
-
+            print()
             #
             tokenized_example = tokenizer.encode_plus(
                 text_raw,
@@ -56,14 +57,19 @@ class DuIEDataset(Dataset):
                     if spo['predicate'] in label_map.keys():
                         # simple relation
                         label_subject = label_map[spo['predicate']]
-                        label_object = label_subject + 55
+                        label_object = label_subject + 6
+                        # label_object = label_subject + 55
+                        print("label_subject:"+str(label_subject))
+                        print("label_object:"+str(label_object))
+
                         subject_tokens = tokenizer.encode_plus(spo['subject'], add_special_tokens=False)["input_ids"]
                         object_tokens = tokenizer.encode_plus(spo['object']['@value'], add_special_tokens=False)[
                             "input_ids"]
                     else:
                         # complex relation
                         label_subject = label_map[spo['predicate'] + '_' + spo_object]
-                        label_object = label_subject + 55
+                        label_object = label_subject + 6
+                        # label_object = label_subject + 55
                         subject_tokens = tokenizer.encode_plus(spo['subject'], add_special_tokens=False)["input_ids"]
                         object_tokens = tokenizer.encode_plus(spo['object'][spo_object], add_special_tokens=False)[
                             "input_ids"]
@@ -86,6 +92,9 @@ class DuIEDataset(Dataset):
 
                         for index in range(seq_len - object_tokens_len + 1):
                             if tokens[index: index + object_tokens_len] == object_tokens:
+                                #debug
+                                print(forbidden_index)
+
                                 if forbidden_index is None:
                                     labels[index][label_object] = 1
                                     for i in range(object_tokens_len - 1):
@@ -93,6 +102,15 @@ class DuIEDataset(Dataset):
                                     break
                                 # check if labeled already
                                 elif index < forbidden_index or index >= forbidden_index + len(subject_tokens):
+                                    # print(labels)
+                                    print("labels:" + str(len(labels)))
+                                    print("index:" + str(index))
+                                    print("label_object:" + str(label_object))
+                                    print("len(labels[index]):" + str(len(labels[index])))
+                                    print("labels[index]:" + str(labels[index]))
+                                    print("labels[index][label_object]:" + str(labels[index][label_object]))
+                                    print("-" * 100)
+
                                     labels[index][label_object] = 1
                                     for i in range(object_tokens_len - 1):
                                         labels[index + i + 1][1] = 1
@@ -138,6 +156,7 @@ class DuIEDataset(Dataset):
     def __getitem__(self, index):
         return self.tokenized_examples[index]
 
+
 def collate_fn(batch):
     max_len = max([sum(x['attention_mask']) for x in batch])
     all_input_ids = torch.tensor([x['input_ids'][:max_len] for x in batch])
@@ -158,5 +177,6 @@ if __name__ == '__main__':
     args = get_argparse().parse_args()
     # tokenizer = BertTokenizerFast.from_pretrained("/data/zhoujx/prev_trained_model/rbt3")
     tokenizer = BertTokenizerFast.from_pretrained("/data/zhoujx/prev_trained_model/chinese_roberta_wwm_ext_pytorch")
-    dataset = DuIEDataset(args, "../data/duie_train_4000.json", tokenizer)
+    # dataset = DuIEDataset(args, "../data/duie_train_4000.json", tokenizer)
+    dataset = DuIEDataset(args, "../data/kt_train_406.json", tokenizer)
     a = 1
