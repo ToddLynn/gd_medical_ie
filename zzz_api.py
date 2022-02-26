@@ -30,5 +30,5 @@ messages = [
 @app.route('/messages')
 def get_messages():
     return jsonify({"messages":messages})
-app.config["JSON_AS ASCII"] = False
+app.config["JSON_AS_ASCII"] = False
 app.run(port= 8080)
