@@ -21,24 +21,33 @@ class DuIEDataset(Dataset):
     def __init__(self, args, json_path, tokenizer):
         examples = []
 
+        #读取预定义的关系列表
         with open("./data/predicate2id.json", 'r', encoding='utf8') as fp:
             label_map = json.load(fp)
 
+        #读取训练集数据
         with open(json_path, "r", encoding="utf-8") as fp:
             lines = fp.readlines()
+            """
+            list 656
+            """
 
         examples = []
         tokenized_examples = []
         num_labels = 2 * (len(label_map.keys()) - 2) + 2
+        """  num_labels = 44"""
 
+        #for循环 遍历每一条样本数据 dict {}
         for line in tqdm(lines):
             example = json.loads(line)
             # print(line)
             # spo_list = example['spo_list'] if "spo_list" in example.keys() else None
             spo_list = example['spo_list'] if "spo_list" in example.keys() else []
+            """ [{'predicate': '增生_侧别', 'object_type': {'@value': '侧别'}, 'subject_type': '增生腺体', 'object': {'@value': '双侧'}, 'subject': '乳腺组织'}, {'predicate': '增生_表现', 'object_type': {'@value': '乳腺组织改变'}, 'subject_type': '增生腺体', 'object': {'@value': '增生'}, 'subject': '乳腺组织'}, {'predicate': '病灶_侧别', 'object_type': {'@value': '侧别'}, 'subject_type': '病灶', 'object': {'@value': '右'}, 'subject': '乳'}, {'predicate': '病灶_回声强度', 'object_type': {'@value': '回声强度'}, 'subject_type': '病灶', 'object': {'@value': '低回声'}, 'subject': '乳'}, {'predicate': '病灶_评估分类', 'object_type': {'@value': 'BI-RADS分类_超声'}, 'subject_type': '病灶', 'object': {'@value': 'BI-RADS3类'}, 'subject': '乳'}, {'predicate': '腋窝_侧别', 'object_type': {'@value': '侧别'}, 'subject_type': '腋窝', 'object': {'@value': '双'}, 'subject': '腋下'}, {'predicate': '腋窝_淋巴结表现', 'object_type': {'@value': '淋巴结表现'}, 'subject_type': '腋窝', 'object': {'@value': '未见明显肿大淋巴结'}, 'subject': '腋下'}]"""
+
 
             text_raw = example['text']
-            print()
+
             #
             tokenized_example = tokenizer.encode_plus(
                 text_raw,
@@ -47,21 +56,32 @@ class DuIEDataset(Dataset):
                 truncation=True,
                 return_offsets_mapping=True
             )
-            #
+
             seq_len = sum(tokenized_example["attention_mask"])
             tokens = tokenized_example["input_ids"]
             labels = [[0] * num_labels for i in range(args.max_len)]
+
+            #for循环遍历单条样本中的每一条spo三元组，关系，头实体，尾实体
             for spo in spo_list:
+                #对于 单个三元组中的每一个尾实体
                 for spo_object in spo['object'].keys():
-                    # assign relation label
+                    # assign relation label 分配关系标签
+
+                    # 如果spo三元组里的关系值，在预定义的关系字典里
                     if spo['predicate'] in label_map.keys():
+
+                        #映射 关系字典里的那个关系值对应的ID(token)
                         # simple relation
                         label_subject = label_map[spo['predicate']]
                         label_object = label_subject + 6
                         # label_object = label_subject + 55
+                        #todo 为啥需要关系的ID，label_subject
+                        #todo 为啥需要label_object
+
                         print("label_subject:"+str(label_subject))
                         print("label_object:"+str(label_object))
 
+                        #头实体、尾实体，的特征化值
                         subject_tokens = tokenizer.encode_plus(spo['subject'], add_special_tokens=False)["input_ids"]
                         object_tokens = tokenizer.encode_plus(spo['object']['@value'], add_special_tokens=False)[
                             "input_ids"]
@@ -76,10 +96,18 @@ class DuIEDataset(Dataset):
                     subject_tokens_len = len(subject_tokens)
                     object_tokens_len = len(object_tokens)
 
+
+
                     # assign token label
                     # there are situations where s entity and o entity might overlap, e.g. xyz established xyz corporation
                     # to prevent single token from being labeled into two different entity
                     # we tag the longer entity first, then match the shorter entity within the rest text
+                    # 分配 标记标签、特征化标签
+                    # 存在s实体和o实体可能重叠的情况，例如xyz成立xyz公司
+                    # 防止单个令牌被标记为两个不同的实体
+                    # 我们首先标记较长的实体，然后在其余文本中匹配较短的实体
+
+
                     forbidden_index = None
                     if subject_tokens_len > object_tokens_len:
                         for index in range(seq_len - subject_tokens_len + 1):
@@ -100,6 +128,10 @@ class DuIEDataset(Dataset):
                                     for i in range(object_tokens_len - 1):
                                         labels[index + i + 1][1] = 1
                                     break
+
+                                #todo 为什么要设为1？难道是类似于global pointer 那种 矩阵式的多标签。
+
+                                # 检查是否已经标注了
                                 # check if labeled already
                                 elif index < forbidden_index or index >= forbidden_index + len(subject_tokens):
                                     # print(labels)
@@ -178,5 +210,5 @@ if __name__ == '__main__':
     # tokenizer = BertTokenizerFast.from_pretrained("/data/zhoujx/prev_trained_model/rbt3")
     tokenizer = BertTokenizerFast.from_pretrained("/data/zhoujx/prev_trained_model/chinese_roberta_wwm_ext_pytorch")
     # dataset = DuIEDataset(args, "../data/duie_train_4000.json", tokenizer)
-    dataset = DuIEDataset(args, "../data/kt_train_406.json", tokenizer)
+    dataset = DuIEDataset(args, "../data/kt_train_656.json", tokenizer)
     a = 1

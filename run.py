@@ -154,30 +154,33 @@ def main():
     # init_logger(log_file="./log/{}.log".format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())))
     seed_everything(args.seed)
 
-    # 设置保存目录
+    # 设置保存目录、输出目录
     if not os.path.exists(args.output_dir):
         os.mkdir(args.output_dir)
 
-    # Reads label_map.
+    # Reads label_map.  读取预定义的关系列表
     with open("./data/predicate2id.json", 'r', encoding='utf8') as fp:
         label_map = json.load(fp)
+        """ label_map就是 predicate2id.json这个数据文件的.dict版本"""
     num_classes = (len(label_map.keys()) - 2) * 2 + 2
+    """ num_classes = 44；len(label_map.keys())= 23"""
 
-    # device
+    # 设置gpu显卡,device
     args.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    # tokenizer
+    # 定义bert特征提取器 tokenizer
     tokenizer = BertTokenizerFast.from_pretrained(args.model_name_or_path)
     # tokenizer = BertTokenizer.from_pretrained(args.model_name_or_path)
     args.cls_token_id = tokenizer.cls_token_id
     args.sep_token_id = tokenizer.sep_token_id
     args.pad_token_id = tokenizer.pad_token_id
 
+    #数据集处理和导入
     # Dataset & Dataloader
     train_dataset = DuIEDataset(args,
                                 # json_path="data/duie_train_4000.json",
                                 # json_path="data/duie_train.json",
-                                json_path="data/kt_train_406.json",
+                                json_path="data/kt_train_656.json",
                                 tokenizer=tokenizer)
     eval_dataset = DuIEDataset(args,
                                # json_path="./data/duie_dev.json",
@@ -187,6 +190,8 @@ def main():
     #                                           [round(0.5 * len(eval_dataset)),
     #                                            len(eval_dataset) - round(0.5 * len(eval_dataset))],
     #                                           generator=torch.Generator().manual_seed(42))
+
+    """ train_iter 将数据集和采样器结合在一起，并提供了一个iterable over 给定的数据集。"""
     train_iter = DataLoader(train_dataset,
                             shuffle=True,
                             batch_size=args.per_gpu_train_batch_size,
@@ -207,7 +212,7 @@ def main():
     logger.info("The nums of the train_dataset features is {}".format(len(train_dataset)))
     logger.info("The nums of the eval_dataset features is {}".format(len(eval_dataset)))
 
-    # model
+    # 模型：百度信息抽取模型model
     model = DuIE_model(args.model_name_or_path, num_classes=num_classes)
     model.to(args.device)
 
