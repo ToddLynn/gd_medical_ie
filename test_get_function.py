@@ -19,7 +19,7 @@ def get_precision_recall_f1(golden_file, predict_file):
     return precision, recall, f1
 
 
-if __name__ == '__main__':
-    golden_file = "./data/duie_dev.json"
-    predict_file = "./output/eval_predictions.json"
-    get_precision_recall_f1(golden_file, predict_file)
+# if __name__ == '__main__':
+    # golden_file = "./data/duie_dev.json"
+    # predict_file = "./output/eval_predictions.json"
+    # get_precision_recall_f1(golden_file, predict_file)

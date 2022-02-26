@@ -6,11 +6,18 @@
 
 
 
-#python predict.py
+#预测 python predict.py
 --max_len=150
 --model_name_or_path="F:\workspace_dl_env\test-lab\Test_DuIE\data\zhoujx\prev_trained_model\chinese_roberta_wwm_ext_pytorch"
 --per_gpu_eval_batch_size=2
---per_gpu_eval_batch_size=2
 --output_dir="./output"
 --fine_tunning_model="./output/best_model.pkl"
---num_train_epochs=5
+
+
+#
+#python predict.py
+--max_len=150
+--model_name_or_path=下载的预训练模型路径
+--per_gpu_eval_batch_size=500
+--output_dir="./output"
+--fine_tunning_model=微调后的模型路径
