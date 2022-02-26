@@ -52,7 +52,9 @@ def main():
 
     # Dataset & Dataloader
     test_dataset = DuIEDataset(args,
-                               json_path="data/test/duie_test1.json",
+                               # json_path="./data/test/duie_test1.json",
+                               # json_path=r"F:\workspace_dl_env\gd_medical_ie\data\test\kt_test1.json",
+                               json_path=r"F:\workspace_dl_env\gd_medical_ie\data\test\kt_te    st2.json",
                                tokenizer=tokenizer)
 
     test_iter = DataLoader(test_dataset,
