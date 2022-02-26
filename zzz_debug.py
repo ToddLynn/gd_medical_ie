@@ -2,9 +2,8 @@ import json
 from tqdm import tqdm
 
 
-# json_path = "./data/sc_train_406.json"
 # json_path = "./data/duie_train_4000.json"
-json_path = "./data/kt_train_406.json"
+json_path = "./data/kt_train_656.json"
 
 
 # """

@@ -73,7 +73,7 @@ class DuIEDataset(Dataset):
                         #映射 关系字典里的那个关系值对应的ID(token)
                         # simple relation
                         label_subject = label_map[spo['predicate']]
-                        label_object = label_subject + 6
+                        label_object = label_subject + 21
                         # label_object = label_subject + 55
                         #todo 为啥需要关系的ID，label_subject
                         #todo 为啥需要label_object
@@ -88,7 +88,7 @@ class DuIEDataset(Dataset):
                     else:
                         # complex relation
                         label_subject = label_map[spo['predicate'] + '_' + spo_object]
-                        label_object = label_subject + 6
+                        label_object = label_subject + 21
                         # label_object = label_subject + 55
                         subject_tokens = tokenizer.encode_plus(spo['subject'], add_special_tokens=False)["input_ids"]
                         object_tokens = tokenizer.encode_plus(spo['object'][spo_object], add_special_tokens=False)[
