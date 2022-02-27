@@ -11,24 +11,42 @@ def post_Data():
     import json
 
     postdata = request.form['medical_content']
+    if postdata:
 
-    # 1.输入
-    gene_path = "F:\workspace_dl_env\gd_medical_ie\data\input\kt_input1.json"
-    dict1 = {"text": str(postdata)}
-    with open(gene_path, "w", encoding="utf-8") as input_f:
-        json.dump(dict1, input_f, ensure_ascii=False)
+        # 1.输入
+        # 删除本地的json文件
 
-    # 2.
-    predict_re()
+        gene_path = "F:\workspace_dl_env\gd_medical_ie\data\input\kt_input1.json"
 
-    # 3.输出
-    path1 = r"F:\workspace_dl_env\gd_medical_ie\output\test_predictions.json"
-    with open(path1, 'r', encoding="utf-8") as output_f:
-        output_dict = json.load(output_f)
-        # print(load_dict)
+        os.remove(gene_path)
 
-    recognize_info = {"result": output_dict}
-    return jsonify(recognize_info), 201
+        dict1 = {"text": str(postdata)}
+        with open(gene_path, "w", encoding="utf-8") as input_f:
+            json.dump(dict1, input_f, ensure_ascii=False)
+
+        # 2.
+        # 先删除一下
+        output_path = r"F:\workspace_dl_env\gd_medical_ie\output\test_predictions.json"
+
+        os.remove(output_path)
+
+        predict_re()
+
+        with open(output_path, "r", encoding="utf-8") as ft:
+
+            if json.load(ft)["spo_list"]:
+                # 3.输出
+                with open(output_path, 'r', encoding="utf-8") as output_f:
+                    output_dict = json.load(output_f)
+                    # print(load_dict)
+
+                recognize_info = {"result": output_dict}
+                return jsonify(recognize_info), 201
+                # todo 查询201
+            else:
+                return jsonify("没有识别出任何实体关系，请输入乳腺超声报告的相关文本")
+    else:
+        return jsonify("当前无数据，请重新输入")
 
 
 if __name__ == '__main__':
