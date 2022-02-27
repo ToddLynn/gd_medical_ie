@@ -18,7 +18,8 @@ def post_Data():
 
         gene_path = "F:\workspace_dl_env\gd_medical_ie\data\input\kt_input1.json"
 
-        os.remove(gene_path)
+        if os.path.exists(gene_path):
+            os.remove(gene_path)
 
         dict1 = {"text": str(postdata)}
         with open(gene_path, "w", encoding="utf-8") as input_f:
@@ -28,7 +29,8 @@ def post_Data():
         # 先删除一下
         output_path = r"F:\workspace_dl_env\gd_medical_ie\output\test_predictions.json"
 
-        os.remove(output_path)
+        if os.path.exists(output_path):
+            os.remove(output_path)
 
         predict_re()
 

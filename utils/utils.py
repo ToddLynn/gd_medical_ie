@@ -5,7 +5,7 @@
 @DESCRIPTION:
 
 """
-from flask import Flask,jsonify
+from flask import Flask, jsonify
 
 import codecs
 import json
@@ -272,15 +272,6 @@ def decoding(example_all,
         formatted_instance['spo_list'] = spo_list
         formatted_outputs.append(formatted_instance)
 
-        #打印查看
-        print("-"*100)
-        # print(formatted_outputs)
-        print(type(formatted_outputs))
-        print("-"*100)
-
-
-
-
     return formatted_outputs
 
 
@@ -298,13 +289,13 @@ def write_prediction_results(formatted_outputs, file_path):
 
     # return zipfile_path
 
-        # #flask
-        # app = Flask(__name__)
-        # @app.route('/medical_ie')
-        # def get_messages():
-        #     return jsonify({"medical_ie":formatted_outputs})
-        # app.config["JSON_AS_ASCII"] = False
-        # app.run(port= 8080)
+    # #flask
+    # app = Flask(__name__)
+    # @app.route('/medical_ie')
+    # def get_messages():
+    #     return jsonify({"medical_ie":formatted_outputs})
+    # app.config["JSON_AS_ASCII"] = False
+    # app.run(port= 8080)
 
 
 def get_precision_recall_f1(golden_file, predict_file):
