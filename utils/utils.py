@@ -278,13 +278,8 @@ def decoding(example_all,
         print(type(formatted_outputs))
         print("-"*100)
 
-        #封装flask
-        app = Flask(__name__)
-        @app.route('/medical_ie')
-        def get_messages():
-            return jsonify({"medical_ie":formatted_outputs})
-        app.config["JSON_AS_ASCII"] = False
-        app.run(port= 8080)
+
+
 
     return formatted_outputs
 
@@ -303,28 +298,13 @@ def write_prediction_results(formatted_outputs, file_path):
 
     # return zipfile_path
 
-
-# "传json"
-# app = Flask(__name__)
-# messages = [
-#     {
-#         "team":"China",
-#         "player" :[
-#     {
-#         "name":"yaoming",
-#         "number":11
-#     }
-# ]
-#     }
-# ]
-#
-# #获取中国队的所有数据
-# @app.route('/messages')
-# def get_messages():
-#     return jsonify({"messages":messages})
-# app.config["JSON_AS ASCII"] = False
-# app.run(port= 8080)
-
+        # #flask
+        # app = Flask(__name__)
+        # @app.route('/medical_ie')
+        # def get_messages():
+        #     return jsonify({"medical_ie":formatted_outputs})
+        # app.config["JSON_AS_ASCII"] = False
+        # app.run(port= 8080)
 
 
 def get_precision_recall_f1(golden_file, predict_file):

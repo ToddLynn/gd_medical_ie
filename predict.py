@@ -21,7 +21,7 @@ from utils.finetuning_argparse import get_argparse
 from utils.utils import seed_everything, init_logger, logger
 
 
-def main():
+def predict_re():
     parser = get_argparse()
     parser.add_argument("--fine_tunning_model",
                         type=str,
@@ -54,7 +54,8 @@ def main():
     test_dataset = DuIEDataset(args,
                                # json_path="./data/test/duie_test1.json",
                                # json_path=r"F:\workspace_dl_env\gd_medical_ie\data\test\kt_test1.json",
-                               json_path=r"F:\workspace_dl_env\gd_medical_ie\data\test\kt_test2.json",
+                               # json_path=r"F:\workspace_dl_env\gd_medical_ie\data\test\kt_test2.json",
+                               json_path=r"F:/workspace_dl_env/gd_medical_ie/data/input/kt_input1.json",
                                tokenizer=tokenizer)
 
     test_iter = DataLoader(test_dataset,
@@ -62,7 +63,7 @@ def main():
                            batch_size=args.per_gpu_eval_batch_size,
                            collate_fn=collate_fn,
                            num_workers=0)
-                           # num_workers=10)
+    # num_workers=10)
     logger.info("The nums of the train_dataset features is {}".format(len(test_dataset)))
     logger.info("The nums of the eval_dataset features is {}".format(len(test_dataset)))
 
@@ -75,6 +76,6 @@ def main():
     evaluate(args, test_iter, model, mode="test")
 
 
-
 if __name__ == "__main__":
-    main()
+    # main()
+    predict_re()
