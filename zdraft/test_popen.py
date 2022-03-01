@@ -10,7 +10,7 @@
 import os
 
 golden_file = "data/duie_dev.json"
-predict_file = "output/eval_predictions.json"
+predict_file = "../output/eval_predictions.json"
 
 result = os.popen('python3 ./re_official_evaluation.py --golden_file={} --predict_file={}'.
                     format(golden_file, predict_file))

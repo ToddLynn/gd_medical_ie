@@ -1,4 +1,5 @@
 from flask import Flask,jsonify
+from flask_cors import CORS
 
 
 "传字符串"
@@ -31,4 +32,7 @@ messages = [
 def get_messages():
     return jsonify({"messages":messages})
 app.config["JSON_AS_ASCII"] = False
-app.run(port= 8080)
+
+CORS(app, resources=r'/*')
+
+app.run(debug=False, host='0.0.0.0', port= 8080)

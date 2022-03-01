@@ -3,7 +3,7 @@ from tqdm import tqdm
 
 
 # json_path = "./data/duie_train_4000.json"
-json_path = "./data/kt_train_656.json"
+json_path = "../data/kt_train_656.json"
 
 
 # """
@@ -38,7 +38,7 @@ json_path = "./data/kt_train_656.json"
 """
 debug
 """
-with open("data/predicate2id.json", 'r', encoding='utf8') as fp:
+with open("../data/predicate2id.json", 'r', encoding='utf8') as fp:
     label_map = json.load(fp)
 
 num_labels = 2 * (len(label_map.keys()) - 2) + 2
