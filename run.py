@@ -180,11 +180,11 @@ def main():
     train_dataset = DuIEDataset(args,
                                 # json_path="data/duie_train_4000.json",
                                 # json_path="data/duie_train.json",
-                                json_path="data/kt_train_656.json",
+                                json_path="data/kt_train_460.json",
                                 tokenizer=tokenizer)
     eval_dataset = DuIEDataset(args,
                                # json_path="./data/duie_dev.json",
-                               json_path="./data/kt_train_656.json",
+                               json_path="data/kt_dev_196.json",
                                tokenizer=tokenizer)
     # eval_dataset, test_dataset = random_split(eval_dataset,
     #                                           [round(0.5 * len(eval_dataset)),

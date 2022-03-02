@@ -175,8 +175,8 @@ def decoding(example_all,
         # complex_relation_label = [8, 10, 26, 32, 46]
         # complex_relation_affi_label = [9, 11, 27, 28, 29, 33, 47]
 
-        complex_relation_label = [12, 15, 18, 21]
-        complex_relation_affi_label = [6, 7, 8, 9, 10, 13, 16, 19, 22]
+        # complex_relation_label = [12, 15, 18, 21]
+        # complex_relation_affi_label = [6, 7, 8, 9, 10, 13, 16, 19, 22]
 
         # flatten predictions then retrival all valid subject id
         # 展平预测，然后检索所有有效的 头实体id
@@ -193,80 +193,105 @@ def decoding(example_all,
                 subject_id_list.append(cls_label)
         subject_id_list = list(set(subject_id_list))
 
+        # # fetch all valid spo by subject id
+        # # 按头实体id  获取所有有效的spo
+        # spo_list = []
+        # for id_ in subject_id_list:
+        #     if id_ in complex_relation_affi_label:
+        #         continue  # do this in the next "else" branch
+        #     if id_ not in complex_relation_label:
+        #         subjects = find_entity(text_raw,
+        #                                id_,
+        #                                predictions,
+        #                                offset_mapping)
+        #         objects = find_entity(text_raw,
+        #                               # id_ + 55,
+        #                               id_ + 21,
+        #                               predictions,
+        #                               offset_mapping)
+        #         for subject_ in subjects:
+        #             for object_ in objects:
+        #                 spo_list.append({
+        #                     "predicate": id2spo['predicate'][id_],
+        #                     "object_type": {'@value': id2spo['object_type'][id_]},
+        #                     'subject_type': id2spo['subject_type'][id_],
+        #                     "object": {'@value': object_},
+        #                     "subject": subject_
+        #                 })
+        #     else:
+        #         #  traverse all complex relation and look through their corresponding affiliated objects
+        #         #  遍历所有复杂的关系，查看它们对应的附属对象
+        #         subjects = find_entity(text_raw,
+        #                                id_,
+        #                                predictions,
+        #                                offset_mapping)
+        #         objects = find_entity(text_raw,
+        #                               # id_ + 55,
+        #                               id_ + 21,
+        #                               predictions,
+        #                               offset_mapping)
+        #         for subject_ in subjects:
+        #             for object_ in objects:
+        #                 object_dict = {'@value': object_}
+        #                 object_type_dict = {'@value': id2spo['object_type'][id_].split('_')[0]}
+        #                 # if id_ in [8, 10, 32, 46] and id_ + 1 in subject_id_list:
+        #
+        #                 if id_ in [12, 15, 18, 21] and id_ + 1 in subject_id_list:
+        #                     id_affi = id_ + 1
+        #                     object_dict[id2spo['object_type'][id_affi].split(
+        #                         '_')[1]] = find_entity(text_raw,
+        #                                                # id_affi + 55,
+        #                                                id_affi + 21,
+        #                                                predictions,
+        #                                                offset_mapping)[0]
+        #                     object_type_dict[id2spo['object_type'][id_affi].split('_')[1]] = \
+        #                         id2spo['object_type'][id_affi].split('_')[0]
+        #
+        #                 elif id_ == 6:
+        #                     # for id_affi in [27, 28, 29]:
+        #
+        #                     for id_affi in [7, 8, 9, 10]:
+        #                         if id_affi in subject_id_list:
+        #                             object_dict[id2spo['object_type'][id_affi].split('_')[1]] = \
+        #                                 find_entity(text_raw,
+        #                                             # id_affi + 55,
+        #                                             id_affi + 21,
+        #                                             predictions,
+        #                                             offset_mapping)[0]
+        #                             object_type_dict[id2spo['object_type'][id_affi].split('_')[1]] = \
+        #                                 id2spo['object_type'][id_affi].split('_')[0]
+        #                 spo_list.append({
+        #                     "predicate": id2spo['predicate'][id_],
+        #                     "object_type": object_type_dict,
+        #                     "subject_type": id2spo['subject_type'][id_],
+        #                     "object": object_dict,
+        #                     "subject": subject_
+        #                 })
+        "**************************************************************************************************************"
+
         # fetch all valid spo by subject id
         # 按头实体id  获取所有有效的spo
         spo_list = []
         for id_ in subject_id_list:
-            if id_ in complex_relation_affi_label:
-                continue  # do this in the next "else" branch
-            if id_ not in complex_relation_label:
-                subjects = find_entity(text_raw,
-                                       id_,
-                                       predictions,
-                                       offset_mapping)
-                objects = find_entity(text_raw,
-                                      # id_ + 55,
-                                      id_ + 21,
-                                      predictions,
-                                      offset_mapping)
-                for subject_ in subjects:
-                    for object_ in objects:
-                        spo_list.append({
-                            "predicate": id2spo['predicate'][id_],
-                            "object_type": {'@value': id2spo['object_type'][id_]},
-                            'subject_type': id2spo['subject_type'][id_],
-                            "object": {'@value': object_},
-                            "subject": subject_
-                        })
-            else:
-                #  traverse all complex relation and look through their corresponding affiliated objects
-                #  遍历所有复杂的关系，查看它们对应的附属对象
-                subjects = find_entity(text_raw,
-                                       id_,
-                                       predictions,
-                                       offset_mapping)
-                objects = find_entity(text_raw,
-                                      # id_ + 55,
-                                      id_ + 21,
-                                      predictions,
-                                      offset_mapping)
-                for subject_ in subjects:
-                    for object_ in objects:
-                        object_dict = {'@value': object_}
-                        object_type_dict = {'@value': id2spo['object_type'][id_].split('_')[0]}
-                        # if id_ in [8, 10, 32, 46] and id_ + 1 in subject_id_list:
-
-                        if id_ in [12, 15, 18, 21] and id_ + 1 in subject_id_list:
-                            id_affi = id_ + 1
-                            object_dict[id2spo['object_type'][id_affi].split(
-                                '_')[1]] = find_entity(text_raw,
-                                                       # id_affi + 55,
-                                                       id_affi + 21,
-                                                       predictions,
-                                                       offset_mapping)[0]
-                            object_type_dict[id2spo['object_type'][id_affi].split('_')[1]] = \
-                                id2spo['object_type'][id_affi].split('_')[0]
-
-                        elif id_ == 6:
-                            # for id_affi in [27, 28, 29]:
-
-                            for id_affi in [7, 8, 9, 10]:
-                                if id_affi in subject_id_list:
-                                    object_dict[id2spo['object_type'][id_affi].split('_')[1]] = \
-                                        find_entity(text_raw,
-                                                    # id_affi + 55,
-                                                    id_affi + 21,
-                                                    predictions,
-                                                    offset_mapping)[0]
-                                    object_type_dict[id2spo['object_type'][id_affi].split('_')[1]] = \
-                                        id2spo['object_type'][id_affi].split('_')[0]
-                        spo_list.append({
-                            "predicate": id2spo['predicate'][id_],
-                            "object_type": object_type_dict,
-                            "subject_type": id2spo['subject_type'][id_],
-                            "object": object_dict,
-                            "subject": subject_
-                        })
+            subjects = find_entity(text_raw,
+                                   id_,
+                                   predictions,
+                                   offset_mapping)
+            objects = find_entity(text_raw,
+                                  # id_ + 55,
+                                  id_ + 21,
+                                  predictions,
+                                  offset_mapping)
+            for subject_ in subjects:
+                for object_ in objects:
+                    spo_list.append({
+                        "predicate": id2spo['predicate'][id_],
+                        "object_type": {'@value': id2spo['object_type'][id_]},
+                        'subject_type': id2spo['subject_type'][id_],
+                        "object": {'@value': object_},
+                        "subject": subject_
+                    })
+        "**************************************************************************************************************"
 
         formatted_instance['text'] = example['text']
         formatted_instance['spo_list'] = spo_list
