@@ -1,0 +1,6 @@
+POST http://localhost:8888/medical_ie
+Content-Type: application/json
+
+{"medical_content":"1231"}
+
+###
