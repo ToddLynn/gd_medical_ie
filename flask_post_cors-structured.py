@@ -2,7 +2,7 @@ from flask import request, Flask, jsonify, make_response
 from flask_cors import CORS
 from predict import *
 import json
-
+from structured_output import *
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
@@ -40,15 +40,21 @@ def post_Data():
         with open(output_path, "r", encoding="utf-8") as ft:
             if json.load(ft)["spo_list"]:
                 # 3.输出
-                #output_dict：Model 原版输出，供前端反向解析
+                # output_dict：Model 原版输出，供前端反向解析
                 with open(output_path, 'r', encoding="utf-8") as output_f:
                     output_dict = json.load(output_f)
-                #structured output:结构化输出
+                    print(output_dict)
+                    # structured_dict:结构化输出
+                    structured_dict = structured_output(output_dict)
+                    data = {
+                        "annotation": output_dict,
+                        "output_dict": structured_dict
 
+                    }
                 recognize_info = {
                     "code": 200,
                     "msg": "success",
-                    "data": output_dict,
+                    "data": data,
                 }
 
                 response = make_response(jsonify(recognize_info))

@@ -13,9 +13,55 @@ B = {"增生腺体": {"增生_侧别": None, "增生_表现": None}, "导管": {
      "内乳": {"内乳_侧别": None, "内乳_淋巴结表现": None, "内乳_评估分类": None}}
 D = copy.deepcopy(B)
 
-dict_input = {
-    "code": 200,
-    "data": {
+
+def structured(dict):
+    li_spo = dict_input["spo_list"]
+    text = dict_input["text"]
+
+    li_ss = re.split("[；。]", text)
+    li_ss = [i for i in li_ss if i != '']
+
+    # 遍历 五元组列表里的每一个元组
+    li_head = []
+    dict_head = {}
+    tmp = 0
+    # li_total_head = []
+
+    "遍历  每一段分句"
+    for sentence in li_ss:
+        "遍历  每一条关系"
+        for spo in li_spo:
+            span = spo["object"]["@value"]  # "尾实体对应的文本-字词片段"
+
+            attr = spo["predicate"]         # "尾实体对应的属性名"
+            head = spo["subject_type"]      # "尾实体对应的头实体"
+
+            tmp = dict_head.get(head, 0)    # 获取 -当前字典中头实体head的个数
+
+            "如果词语在第一段句子中"
+            if span in sentence:
+                if tmp == 0:
+                    D[head][attr] = span
+                    li_head.append(head)
+                else:
+                    module = head + str(dict_head[head] + 1)
+                    D[module] = B[head]
+                    D[module][attr] = span
+                    li_head.append(head)
+
+        # 当  一段分句中的所有属性已经填满，把这个分句里的head添加到li_head里面。
+
+        head = list(set(li_head))[0]
+        li_head = []
+
+        dict_head[head] = tmp + 1  # 完成一段的书写，追加1个头实体head的个数记录
+
+
+    return D
+
+if __name__ == '__main__':
+
+    dict_input = {
         "spo_list": [
             {
                 "object": {
@@ -129,66 +175,6 @@ dict_input = {
             }
         ],
         "text": "双乳低回声,BI-RADS3类。左乳无回声,BI-RADS2类。左侧腋下未见明显淋巴结；右侧腋下淋巴结肿大。"
-    },
-    "msg": "success"
-}
-li_spo = dict_input["data"]["spo_list"]
+    }
 
-# text = "双乳低回声,BI-RADS3类。左乳无回声,BI-RADS2类。左侧腋下未见明显淋巴结；右侧腋下淋巴结肿大。"
-text = dict_input["data"]["text"]
-
-# 分段
-
-li_ss = re.split("[；。]", text)
-li_ss = [i for i in li_ss if i != '']
-
-# 遍历 五元组列表里的每一个元组
-li_head = []
-dict_head = {}
-tmp = 0
-li_total_head = []
-
-
-"双乳低回声,BI-RADS3类。左乳无回声,BI-RADS2类。左侧腋下未见明显淋巴结；右侧腋下淋巴结肿大。"
-"遍历  每一段分句"
-for sentence in li_ss:
-    "遍历  对于每一条关系"
-    for spo in li_spo:
-        span = spo["object"]["@value"]  # "尾实体对应的文本-字词片段"
-
-        attr = spo["predicate"]  # "尾实体对应的属性名"
-        head = spo["subject_type"]  # "尾实体对应的头实体"
-
-        print("dict_head:   "+str(dict_head))
-        tmp = dict_head.get(head, 0)  # 获取 -当前字典里头实体head的个数
-        # print("tmp:   "+str(tmp))
-
-        "如果词语在第一段句子中"
-        if span in sentence:
-            if tmp ==0:
-                D[head][attr] = span
-                li_head.append(head)
-            else:
-                module = head + str(dict_head[head]+1)
-                D[module] = B[head]
-                D[module][attr] = span
-                li_head.append(head)
-
-    # 当  一段分句中的所有属性已经填满，把这个分句里的head添加到li_head里面。
-
-    head = list(set(li_head))[0]
-    print("head:   "+str(head))
-    li_head = []
-
-    dict_head[head] = tmp + 1     # 完成一段的书写，追加1个头实体head的个数记录
-    print("dict_head:  " + str(dict_head))
-
-    li_total_head.append(head)
-    print("-" * 100)
-
-print(li_total_head)
-print(dict_head)
-print(D)
-
-
-
+    print(structured(dict_input))
