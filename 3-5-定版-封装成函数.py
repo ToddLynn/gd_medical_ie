@@ -4,7 +4,6 @@
 
 import re
 import copy
-import pandas as pd
 
 B = {"增生腺体": {"增生_侧别": None, "增生_表现": None}, "导管": {"导管_侧别": None, "导管_表现": None},
      "病灶": {"病灶_侧别": None, "病灶_象限": None, "病灶_钟面": None, "病灶_评估分类": None, "病灶_回声强度": None, },
@@ -135,7 +134,8 @@ dict_input = {
 }
 li_spo = dict_input["data"]["spo_list"]
 
-text = "双乳低回声,BI-RADS3类。左乳无回声,BI-RADS2类。左侧腋下未见明显淋巴结；右侧腋下淋巴结肿大。"
+# text = "双乳低回声,BI-RADS3类。左乳无回声,BI-RADS2类。左侧腋下未见明显淋巴结；右侧腋下淋巴结肿大。"
+text = dict_input["data"]["text"]
 
 # 分段
 

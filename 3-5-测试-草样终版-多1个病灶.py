@@ -161,7 +161,7 @@ for sentence in li_ss:
 
         print("dict_head:   "+str(dict_head))
         tmp = dict_head.get(head, 0)  # 获取 -当前字典里头实体head的个数
-        # print("tmp:   "+str(tmp))
+        print("tmp:   "+str(tmp))
 
         "如果词语在第一段句子中"
         if span in sentence:
@@ -177,18 +177,15 @@ for sentence in li_ss:
     # 当  一段分句中的所有属性已经填满，把这个分句里的head添加到li_head里面。
 
     head = list(set(li_head))[0]
-    print("head:   "+str(head))
     li_head = []
 
+    tmp = dict_head.get(head, 0)  # 获取 -当前字典里头实体head的个数
     dict_head[head] = tmp + 1     # 完成一段的书写，追加1个头实体head的个数记录
-    print("dict_head:  " + str(dict_head))
 
     li_total_head.append(head)
-    print("-" * 100)
 
 print(li_total_head)
 print(dict_head)
 print(D)
-
 
 
