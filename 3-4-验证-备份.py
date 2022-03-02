@@ -4,6 +4,7 @@
 
 import re
 import copy
+import pandas as pd
 
 B = {"增生腺体": {"增生_侧别": None, "增生_表现": None}, "导管": {"导管_侧别": None, "导管_表现": None},
      "病灶": {"病灶_侧别": None, "病灶_象限": None, "病灶_钟面": None, "病灶_评估分类": None, "病灶_回声强度": None, },
@@ -11,7 +12,7 @@ B = {"增生腺体": {"增生_侧别": None, "增生_表现": None}, "导管": {
      "锁骨上侧": {"锁骨上侧_侧别": None, "锁骨上_淋巴结表现": None, "锁骨上_评估分类": None},
      "锁骨下侧": {"锁骨下_侧别": None, "锁骨下_淋巴结表现": None, "锁骨下_评估分类": None},
      "内乳": {"内乳_侧别": None, "内乳_淋巴结表现": None, "内乳_评估分类": None}}
-D =copy.deepcopy(B)
+D = copy.deepcopy(B)
 
 dict_input = {
     "code": 200,
@@ -140,47 +141,53 @@ text = "双乳低回声,BI-RADS3类。左乳无回声,BI-RADS2类。左侧腋下
 
 li_ss = re.split("[；。]", text)
 li_ss = [i for i in li_ss if i != '']
-# print(li_ss)
 
-# # 判断尾实体是否在第1段话里
-#
-# # 第一段话
-# sentence_1 = li_ss[0]
-#
-# # 判断尾实体是否在第1段话里
-#
 # 遍历 五元组列表里的每一个元组
 li_head = []
 dict_head = {}
 tmp = 0
-#todo 每一个句子
+li_total_head = []
+
+"遍历  每一段分句"
 for sentence in li_ss:
+    "遍历  对于每一条关系"
+    for spo in li_spo:
+        span = spo["object"]["@value"]  # "尾实体对应的文本-字词片段"
 
-    #todo 对于每一条关系
-    for o in li_spo:
-        span = o["object"]["@value"]  # "尾实体对应的文本-字词片段"
-
-        attr = o["predicate"]  # "尾实体对应的属性名"
-        head = o["subject_type"]  # "尾实体对应的头实体"
+        attr = spo["predicate"]  # "尾实体对应的属性名"
+        head = spo["subject_type"]  # "尾实体对应的头实体"
         # print(head)
 
         tmp = dict_head.get(head, 0)  # 获取 -当前字典里头实体head的个数
-        # print(tmp)
+        # print("tmp:   " + str(tmp))
 
-#         #         #todo  如果词语在第一段句子中
+        "如果词语在第一段句子中"
         if span in sentence:
-            if tmp == 0 :
-            # if dict_head[head] == 0 :
-                D[head][attr] = span
-            else :
-                module = head + str(dict_head[head]+1)
-                D[module] = B[head]
-                D[module][attr] = span
-    li_head.append(head)
-    print("tmp:"+str(tmp))
-    dict_head[head] = tmp + 1   # 完成一段的书写，追加1个头实体head的个数记录
+            D[head][attr] = span
+            li_head.append(head)
+
+    # 当  一段分句中的所有属性已经填满，把这个分句里的head添加到list_head里面。
+
+    # str_head = list(set(li_head))[0]
+    head = list(set(li_head))[0]
+    # print(head)
+    # print("-" * 100)
+    print("head:  " + head)
+    dict_head[head] = tmp + 1  # 完成一段的书写，追加1个头实体head的个数记录
+    print("dict_head:  " + str(dict_head))
+
+    li_total_head.append(head)
+    print("-" * 100)
+
+print(li_total_head)
+print(dict_head)
+
+
 #
-print(li_head)
-# print(tmp)
-print(D)
-# print(dict_head)
+#     print("tmp:" + str(tmp))
+#     dict_head[head] = tmp + 1  # 完成一段的书写，追加1个头实体head的个数记录
+# #
+# print(li_head)
+# # print(tmp)
+# print(D)
+# # print(dict_head)

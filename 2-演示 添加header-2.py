@@ -1,5 +1,5 @@
 li = []
-a = ["导管", "导管", "导管", "乳"]
+a = ["导管", "导管", "乳", "乳"]
 di_head = {}
 for head in a:
 
@@ -9,8 +9,8 @@ for head in a:
 
     module_name = head + str(di_head[head])  #当前模块名的定义，导管，导管1
 
-    print(tmp)
-    print(di_head[head])
+    # print(tmp)
+    # print(di_head[head])
     print(module_name)
 
     # print(module_name.replace('1', ''))
