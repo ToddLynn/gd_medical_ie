@@ -52,14 +52,19 @@ def structured_output(output_dict):
 
         # 当  一段分句中的所有属性已经填满，把这个分句里的head添加到li_head里面。
         # head = list(set(li_head))[0]
-        print(list(set(li_head)))
-        head = list(set(li_head))[0]
-        # print(head)
         # print(list(set(li_head)))
+        try:
+            head = list(set(li_head))[0]
+            # print(head)
+            # print(list(set(li_head)))
 
-        li_head = []
+            li_head = []
 
-        dict_head[head] = tmp + 1  # 完成一段的书写，追加1个头实体head的个数记录
+            dict_head[head] = tmp + 1  # 完成一段的书写，追加1个头实体head的个数记录
+        except:
+            # print("\n"+"-"*100)
+            # print("li_head = []")
+            pass
 
 
     return D
