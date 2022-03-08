@@ -133,8 +133,11 @@ def find_entity(text_raw,
     """
     retrieval entity mention under given predicate id for certain prediction.
     this is called by the "decoding" func.
+    检索  在给定 predicate id下;提及实体以进行特定预测。
+    这被“解码”函数调用。
     """
     entity_list = []
+    index_entity_list = []
     for i in range(len(predictions)):
         if [id_] in predictions[i]:
             j = 0
@@ -145,6 +148,8 @@ def find_entity(text_raw,
                     break
             entity = ''.join(text_raw[offset_mapping[i][0]:
                                       offset_mapping[i + j][1]])
+            entity_tuple = (offset_mapping[i][0], offset_mapping[i + j][1])
+            index_entity_list.append(entity_tuple)
             entity_list.append(entity)
     return list(set(entity_list))
 
@@ -289,7 +294,9 @@ def decoding(example_all,
                         "object_type": {'@value': id2spo['object_type'][id_]},
                         'subject_type': id2spo['subject_type'][id_],
                         "object": {'@value': object_},
+
                         "subject": subject_
+
                     })
         "**************************************************************************************************************"
 
@@ -313,14 +320,6 @@ def write_prediction_results(formatted_outputs, file_path):
         # f.write(file_path)
 
     # return zipfile_path
-
-    # #flask
-    # app = Flask(__name__)
-    # @app.route('/medical_ie')
-    # def get_messages():
-    #     return jsonify({"medical_ie":formatted_outputs})
-    # app.config["JSON_AS_ASCII"] = False
-    # app.run(port= 8080)
 
 
 def get_precision_recall_f1(golden_file, predict_file):
