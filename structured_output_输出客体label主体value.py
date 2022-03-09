@@ -49,6 +49,7 @@ def structured_output_label(output_dict):
     }
 
     D = copy.deepcopy(B)
+
     li_spo = output_dict["spo_list"]
     text = output_dict["text"]
 
@@ -57,6 +58,7 @@ def structured_output_label(output_dict):
 
     # 遍历 五元组列表里的每一个元组
     li_head = []
+    li_head_entity = []
     dict_head = {}
     tmp = 0
     # li_total_head = []
@@ -65,25 +67,30 @@ def structured_output_label(output_dict):
     for sentence in li_ss:
         "遍历  每一条关系"
         for spo in li_spo:
-            span = spo["object"]["@value"]  # "尾实体对应的文本-字词片段"
+            span = spo["object"]["@value"]           # "尾实体对应的文本-字词片段"
 
-            attr = spo["predicate"]         # "尾实体对应的属性名"
-            head = spo["subject_type"]      # "尾实体对应的头实体"
+            attr = spo["predicate"]                  # "尾实体对应的属性名"
+            head = spo["subject_type"]               # "尾实体对应的头实体标签"
             label = spo["object_type"]["@value"]     # "尾实体对应的头实体"
 
-            tmp = dict_head.get(head, 0)    # 获取 -当前字典中头实体head的个数
+            head_entity = spo["subject"]
+            tmp = dict_head.get(head, 0)            # 获取 -当前字典中头实体head的个数
 
             "如果字词片段span 在第一段句子中"
             if span in sentence:
                 if tmp == 0:
                     d = D[head]
-                    # d[attr]["entity"] = span
-                    # d[attr]["label"] = label
-                    # li_head.append(head)
+                    # # D[head]
+                    # D[head][attr]["entity"] = span
+                    # D[head][attr]["label"] = label
+                    # D[head][attr]["idx"] = [text.find(span),text.find(span)+len(span)]
                 else:
                     module = head + str(dict_head[head] + 1)
                     D[module] = B[head]
                     d = D[module]
+                    # D[module][attr]["entity"] = span
+                    # D[module][attr]["label"] = label
+                    # D[module][attr]["idx"] = [text.find(span),text.find(span)+len(span)]
                 d[attr]["entity"] = span
                 d[attr]["label"] = label
                 d[attr]["idx"] = [text.find(span),text.find(span)+len(span)]
@@ -91,45 +98,224 @@ def structured_output_label(output_dict):
 
 
                 li_head.append(head)
+                li_head_entity.append(head_entity)
 
         # 当  一段分句中的所有属性已经填满，把这个分句里的head添加到li_head里面。
-        # head = list(set(li_head))[0]
-        # print(list(set(li_head)))
-        try:
-            head = list(set(li_head))[0]
-            # print(head)
-            # print(list(set(li_head)))
 
+        try:
+            li_sort_head = list(set(li_head))
+            li_sort_head.sort(key=li_head.index)
+            # head = li_sort_head[-1]
+            head = li_sort_head[0]
+
+            li_sort_head = list(set(li_head_entity))
+            li_sort_head.sort(key=li_head_entity.index)
+
+            # head_entity = list(set(li_head_entity))[-1]
+            head_entity = list(set(li_head_entity))[0]
+
+
+            d["主体"] = {}
+            d["主体"]["entity"] = head_entity
+            d["主体"]["idx"] = [text.find(head_entity,text.find(sentence)),text.find(head_entity,text.find(sentence))+len(head_entity)]
+            d["主体"]["label"] = head
+
+            li_head
 
             li_head = []
-
+            li_head_entity = []
             dict_head[head] = tmp + 1  # 完成一段的书写，追加1个头实体head的个数记录
         except:
             # print("\n"+"-"*100)
             # print("li_head = []")
             pass
 
-
+    D["content"] = text
     return D
 
 
 if __name__ == '__main__':
-    dict1 = {"text": "1、左乳外上象限巨大低回声团,考虑BI-RADS:5类。2、右乳内上象限，BI-RADS2类。3、双侧腋下未见明显肿大淋巴结。", "spo_list": [
-        {"predicate": "病灶_侧别", "object_type": {"@value": "侧别"}, "subject_type": "病灶", "object": {"@value": "右"},
-         "subject": "乳"},
-        {"predicate": "病灶_侧别", "object_type": {"@value": "侧别"}, "subject_type": "病灶", "object": {"@value": "左"},
-         "subject": "乳"},
-        {"predicate": "病灶_象限", "object_type": {"@value": "象限定位"}, "subject_type": "病灶", "object": {"@value": "内上象限"},
-         "subject": "乳"},
-        {"predicate": "病灶_象限", "object_type": {"@value": "象限定位"}, "subject_type": "病灶", "object": {"@value": "外上象限"},
-         "subject": "乳"}, {"predicate": "病灶_评估分类", "object_type": {"@value": "BI-RADS分类_超声"}, "subject_type": "病灶",
-                           "object": {"@value": "BI-RADS2类"}, "subject": "乳"},
-        {"predicate": "病灶_评估分类", "object_type": {"@value": "BI-RADS分类_超声"}, "subject_type": "病灶",
-         "object": {"@value": "BI-RADS:5类"}, "subject": "乳"},
-        {"predicate": "腋窝_侧别", "object_type": {"@value": "侧别"}, "subject_type": "腋窝", "object": {"@value": "双侧"},
-         "subject": "腋下"}, {"predicate": "腋窝_淋巴结表现", "object_type": {"@value": "淋巴结表现"}, "subject_type": "腋窝",
-                            "object": {"@value": "未见明显肿大淋巴结"}, "subject": "腋下"}]}
+    # dict1 = {"text": "1、左乳外上象限巨大低回声团,考虑BI-RADS:5类。2、右乳内上象限，BI-RADS2类。3、双侧腋下未见明显肿大淋巴结。", "spo_list": [
+    #     {"predicate": "病灶_侧别", "object_type": {"@value": "侧别"}, "subject_type": "病灶", "object": {"@value": "右"},
+    #      "subject": "乳"},
+    #     {"predicate": "病灶_侧别", "object_type": {"@value": "侧别"}, "subject_type": "病灶", "object": {"@value": "左"},
+    #      "subject": "乳"},
+    #     {"predicate": "病灶_象限", "object_type": {"@value": "象限定位"}, "subject_type": "病灶", "object": {"@value": "内上象限"},
+    #      "subject": "乳"},
+    #     {"predicate": "病灶_象限", "object_type": {"@value": "象限定位"}, "subject_type": "病灶", "object": {"@value": "外上象限"},
+    #      "subject": "乳"}, {"predicate": "病灶_评估分类", "object_type": {"@value": "BI-RADS分类_超声"}, "subject_type": "病灶",
+    #                        "object": {"@value": "BI-RADS2类"}, "subject": "乳"},
+    #     {"predicate": "病灶_评估分类", "object_type": {"@value": "BI-RADS分类_超声"}, "subject_type": "病灶",
+    #      "object": {"@value": "BI-RADS:5类"}, "subject": "乳"},
+    #     {"predicate": "腋窝_侧别", "object_type": {"@value": "侧别"}, "subject_type": "腋窝", "object": {"@value": "双侧"},
+    #      "subject": "腋下"}, {"predicate": "腋窝_淋巴结表现", "object_type": {"@value": "淋巴结表现"}, "subject_type": "腋窝",
+    #                         "object": {"@value": "未见明显肿大淋巴结"}, "subject": "腋下"}]}
 
+    # dict1 = {
+    #         "spo_list": [
+    #             {
+    #                 "object": {
+    #                     "@value": "右侧"
+    #                 },
+    #                 "object_type": {
+    #                     "@value": "侧别"
+    #                 },
+    #                 "predicate": "腋窝_侧别",
+    #                 "subject": "腋下",
+    #                 "subject_type": "腋窝"
+    #             },
+    #             {
+    #                 "object": {
+    #                     "@value": "左侧"
+    #                 },
+    #                 "object_type": {
+    #                     "@value": "侧别"
+    #                 },
+    #                 "predicate": "腋窝_侧别",
+    #                 "subject": "腋下",
+    #                 "subject_type": "腋窝"
+    #             },
+    #             {
+    #                 "object": {
+    #                     "@value": "未见明显肿大淋巴结"
+    #                 },
+    #                 "object_type": {
+    #                     "@value": "淋巴结表现"
+    #                 },
+    #                 "predicate": "腋窝_淋巴结表现",
+    #                 "subject": "腋下",
+    #                 "subject_type": "腋窝"
+    #             },
+    #             {
+    #                 "object": {
+    #                     "@value": "见肿大淋巴结"
+    #                 },
+    #                 "object_type": {
+    #                     "@value": "淋巴结表现"
+    #                 },
+    #                 "predicate": "腋窝_淋巴结表现",
+    #                 "subject": "腋下",
+    #                 "subject_type": "腋窝"
+    #             }
+    #         ],
+    #         "text": "3、左侧腋下未见明显肿大淋巴结。4、右侧腋下见肿大淋巴结。"
+    #     }
+
+    dict1 = {
+            "spo_list": [
+                {
+                    "object": {
+                        "@value": "左"
+                    },
+                    "object_type": {
+                        "@value": "侧别"
+                    },
+                    "predicate": "病灶_侧别",
+                    "subject": "乳",
+                    "subject_type": "病灶"
+                },
+                {
+                    "object": {
+                        "@value": "右"
+                    },
+                    "object_type": {
+                        "@value": "侧别"
+                    },
+                    "predicate": "病灶_侧别",
+                    "subject": "乳",
+                    "subject_type": "病灶"
+                },
+                {
+                    "object": {
+                        "@value": "外上象限"
+                    },
+                    "object_type": {
+                        "@value": "象限定位"
+                    },
+                    "predicate": "病灶_象限",
+                    "subject": "乳",
+                    "subject_type": "病灶"
+                },
+                {
+                    "object": {
+                        "@value": "9点"
+                    },
+                    "object_type": {
+                        "@value": "钟面定位"
+                    },
+                    "predicate": "病灶_钟面",
+                    "subject": "乳",
+                    "subject_type": "病灶"
+                },
+                {
+                    "object": {
+                        "@value": "无回声"
+                    },
+                    "object_type": {
+                        "@value": "回声强度"
+                    },
+                    "predicate": "病灶_回声强度",
+                    "subject": "乳",
+                    "subject_type": "病灶"
+                },
+                {
+                    "object": {
+                        "@value": "低回声"
+                    },
+                    "object_type": {
+                        "@value": "回声强度"
+                    },
+                    "predicate": "病灶_回声强度",
+                    "subject": "乳",
+                    "subject_type": "病灶"
+                },
+                {
+                    "object": {
+                        "@value": "BI-RADS3类"
+                    },
+                    "object_type": {
+                        "@value": "BI-RADS分类_超声"
+                    },
+                    "predicate": "病灶_评估分类",
+                    "subject": "乳",
+                    "subject_type": "病灶"
+                },
+                {
+                    "object": {
+                        "@value": "BI-RADS2类"
+                    },
+                    "object_type": {
+                        "@value": "BI-RADS分类_超声"
+                    },
+                    "predicate": "病灶_评估分类",
+                    "subject": "乳",
+                    "subject_type": "病灶"
+                },
+                {
+                    "object": {
+                        "@value": "右侧"
+                    },
+                    "object_type": {
+                        "@value": "侧别"
+                    },
+                    "predicate": "腋窝_侧别",
+                    "subject": "腋下",
+                    "subject_type": "腋窝"
+                },
+                {
+                    "object": {
+                        "@value": "淋巴结肿大"
+                    },
+                    "object_type": {
+                        "@value": "淋巴结表现"
+                    },
+                    "predicate": "腋窝_淋巴结表现",
+                    "subject": "腋下",
+                    "subject_type": "腋窝"
+                }
+            ],
+            "text": "1.左乳9点低回声,BI-RADS3类。右乳外上象限无回声,BI-RADS2类。右侧腋下淋巴结肿大。"
+        }
     result = structured_output_label(dict1)
 
     print(result)

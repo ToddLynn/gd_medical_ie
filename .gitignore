@@ -4,3 +4,4 @@
 /data/zhoujx/prev_trained_model/
 
 /output/output_model_backup/
+/output/best_model.pkl
