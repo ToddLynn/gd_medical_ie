@@ -108,8 +108,8 @@ def structured_output_label(output_dict):
             # head = li_sort_head[-1]
             head = li_sort_head[0]
 
-            li_sort_head = list(set(li_head_entity))
-            li_sort_head.sort(key=li_head_entity.index)
+            li_sort_head_entity = list(set(li_head_entity))
+            li_sort_head_entity.sort(key=li_head_entity.index)
 
             # head_entity = list(set(li_head_entity))[-1]
             head_entity = list(set(li_head_entity))[0]
@@ -293,7 +293,7 @@ if __name__ == '__main__':
                 },
                 {
                     "object": {
-                        "@value": "右侧"
+                        "@value": "右"
                     },
                     "object_type": {
                         "@value": "侧别"
@@ -314,7 +314,7 @@ if __name__ == '__main__':
                     "subject_type": "腋窝"
                 }
             ],
-            "text": "1.左乳9点低回声,BI-RADS3类。右乳外上象限无回声,BI-RADS2类。右侧腋下淋巴结肿大。"
+            "text": "1.左乳9点低回声,BI-RADS3类。右乳外上象限无回声,BI-RADS2类。右腋下淋巴结肿大。"
         }
     result = structured_output_label(dict1)
 
