@@ -6,7 +6,7 @@ import re
 import copy
 
 
-def structured_output_label(output_dict):
+def structured_index_output(output_dict):
     B = {
         "增生腺体": {
             "增生_侧别": {},
@@ -312,7 +312,7 @@ if __name__ == '__main__':
         ],
         "text": "1.左乳9点低回声,BI-RADS3类。右乳外上象限无回声,BI-RADS2类。右腋下淋巴结肿大。"
     }
-    result = structured_output_label(dict1)
+    result = structured_index_output(dict1)
 
     print(result)
 

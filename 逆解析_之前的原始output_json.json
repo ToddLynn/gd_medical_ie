@@ -1,177 +1,115 @@
 {
-  'path': 'E:\\02-pre_research\\知识图谱\\数据集\\乳腺超声检查报告_724\\0.txt',
-  'outputs': {
-    'annotation': {
-      'T': [
-        '',
-        None,
-        {
-          'type': 'T',
-          'name': '乳腺组织改变',
-          'value': '增生',
-          'start': 83,
-          'end': 85,
-          'attributes': [],
-          'id': 2
-        },
-        None,
-        {
-          'type': 'T',
-          'name': '回声强度',
-          'value': '低回声',
-          'start': 92,
-          'end': 95,
-          'attributes': [],
-          'id': 4
-        },
-        {
-          'type': 'T',
-          'name': 'BI-RADS分类_超声',
-          'value': 'BI-RADS3类',
-          'start': 97,
-          'end': 106,
-          'attributes': [],
-          'id': 5
-        },
-        None,
-        None,
-        None,
-        None,
-        None,
-        None,
-        None,
-        {
-          'type': 'T',
-          'name': '侧别',
-          'value': '双侧',
-          'start': 76,
-          'end': 78,
-          'attributes': [],
-          'id': 13
-        },
-        {
-          'type': 'T',
-          'name': '侧别',
-          'value': '右',
-          'start': 88,
-          'end': 89,
-          'attributes': [],
-          'id': 14
-        },
-        None,
-        {
-          'type': 'T',
-          'name': '增生腺体',
-          'value': '乳腺组织',
-          'start': 78,
-          'end': 82,
-          'attributes': [],
-          'id': 16
-        },
-        {
-          'type': 'T',
-          'name': '病灶',
-          'value': '乳',
-          'start': 89,
-          'end': 90,
-          'attributes': [],
-          'id': 17
-        },
-        {
-          'type': 'T',
-          'name': '侧别',
-          'value': '双',
-          'start': 116,
-          'end': 117,
-          'attributes': [],
-          'id': 18
-        },
-        {
-          'type': 'T',
-          'name': '腋窝',
-          'value': '腋下',
-          'start': 117,
-          'end': 119,
-          'attributes': [],
-          'id': 19
-        },
-        {
-          'type': 'T',
-          'name': '淋巴结表现',
-          'value': '未见明显肿大淋巴结',
-          'start': 119,
-          'end': 128,
-          'attributes': [],
-          'id': 20
-        },
-        None
-      ],
-      'E': [
-        ''
-      ],
-      'R': [
-        '',
-        None,
-        None,
-        None,
-        None,
-        {
-          'name': '增生_侧别',
-          'from': 16,
-          'to': 13,
-          'arg1': 'Arg1',
-          'arg2': 'Arg2'
-        },
-        {
-          'name': '增生_表现',
-          'from': 16,
-          'to': 2,
-          'arg1': 'Arg1',
-          'arg2': 'Arg2'
-        },
-        {
-          'name': '病灶_侧别',
-          'from': 17,
-          'to': 14,
-          'arg1': 'Arg1',
-          'arg2': 'Arg2'
-        },
-        {
-          'name': '病灶_回声强度',
-          'from': 17,
-          'to': 4,
-          'arg1': 'Arg1',
-          'arg2': 'Arg2'
-        },
-        {
-          'name': '病灶_评估分类',
-          'from': 17,
-          'to': 5,
-          'arg1': 'Arg1',
-          'arg2': 'Arg2'
-        },
-        {
-          'name': '腋窝_侧别',
-          'from': 19,
-          'to': 18,
-          'arg1': 'Arg1',
-          'arg2': 'Arg2'
-        },
-        None,
-        {
-          'name': '腋窝_淋巴结表现',
-          'from': 19,
-          'to': 20,
-          'arg1': 'Arg1',
-          'arg2': 'Arg2'
-        }
-      ],
-      'A': [
-        ''
-      ]
+        "spo_list": [
+            {
+                "object": {
+                    "@value": "左"
+                },
+                "object_type": {
+                    "@value": "侧别"
+                },
+                "predicate": "病灶_侧别",
+                "subject": "乳",
+                "subject_type": "病灶"
+            },
+            {
+                "object": {
+                    "@value": "右"
+                },
+                "object_type": {
+                    "@value": "侧别"
+                },
+                "predicate": "病灶_侧别",
+                "subject": "乳",
+                "subject_type": "病灶"
+            },
+            {
+                "object": {
+                    "@value": "外上象限"
+                },
+                "object_type": {
+                    "@value": "象限定位"
+                },
+                "predicate": "病灶_象限",
+                "subject": "乳",
+                "subject_type": "病灶"
+            },
+            {
+                "object": {
+                    "@value": "9点"
+                },
+                "object_type": {
+                    "@value": "钟面定位"
+                },
+                "predicate": "病灶_钟面",
+                "subject": "乳",
+                "subject_type": "病灶"
+            },
+            {
+                "object": {
+                    "@value": "无回声"
+                },
+                "object_type": {
+                    "@value": "回声强度"
+                },
+                "predicate": "病灶_回声强度",
+                "subject": "乳",
+                "subject_type": "病灶"
+            },
+            {
+                "object": {
+                    "@value": "低回声"
+                },
+                "object_type": {
+                    "@value": "回声强度"
+                },
+                "predicate": "病灶_回声强度",
+                "subject": "乳",
+                "subject_type": "病灶"
+            },
+            {
+                "object": {
+                    "@value": "BI-RADS3类"
+                },
+                "object_type": {
+                    "@value": "BI-RADS分类_超声"
+                },
+                "predicate": "病灶_评估分类",
+                "subject": "乳",
+                "subject_type": "病灶"
+            },
+            {
+                "object": {
+                    "@value": "BI-RADS2类"
+                },
+                "object_type": {
+                    "@value": "BI-RADS分类_超声"
+                },
+                "predicate": "病灶_评估分类",
+                "subject": "乳",
+                "subject_type": "病灶"
+            },
+            {
+                "object": {
+                    "@value": "右"
+                },
+                "object_type": {
+                    "@value": "侧别"
+                },
+                "predicate": "腋窝_侧别",
+                "subject": "腋下",
+                "subject_type": "腋窝"
+            },
+            {
+                "object": {
+                    "@value": "淋巴结肿大"
+                },
+                "object_type": {
+                    "@value": "淋巴结表现"
+                },
+                "predicate": "腋窝_淋巴结表现",
+                "subject": "腋下",
+                "subject_type": "腋窝"
+            }
+        ],
+        "text": "1.左乳9点低回声,BI-RADS3类。右乳外上象限无回声,BI-RADS2类。右腋下淋巴结肿大。"
     }
-  },
-  'time_labeled': 1645770410902,
-  'labeled': True,
-  'content': '1、甲状腺左侧叶切除术后:左侧颈部低回声,考虑异常淋巴结可能,请结合临床。2、甲状腺右侧叶低回声结节,建议定期复查。3、右侧颈部未见明显肿大淋巴结。4、双侧乳腺组织呈增生改变。右乳片状低回声区:BI-RADS3类,建议动态观察。5、双腋下未见明显肿大淋巴结。'
-}

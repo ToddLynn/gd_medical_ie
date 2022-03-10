@@ -2,7 +2,8 @@ from flask import request, Flask, jsonify, make_response
 from flask_cors import CORS
 from predict import *
 import json
-from structured_output import *
+# from structured_output import *
+from structured_index_output import *
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
@@ -44,7 +45,7 @@ def post_Data():
                 # with open(output_path, 'r', encoding="utf-8") as output_f:
                     # structured_dict:结构化输出
                     structured_dict = None
-                    structured_dict = structured_output(output_dict)
+                    structured_dict = structured_index_output(output_dict)
                     print("-"*100)
                     print(structured_dict)
                     print("=" * 100)
