@@ -56,9 +56,6 @@ def struct_anti_parse(output_dict):
     li_ss = re.split("[；。]", text)
     li_ss = [i for i in li_ss if i != '']
 
-    tmp = 0
-    dict_group ={}
-    li_head,li_head_label =[],[]
 
 
     "遍历  每一段分句"
@@ -75,13 +72,7 @@ def struct_anti_parse(output_dict):
 
             "如果字词片段span 在第一段句子中"
             if head in segment and tail in segment:
-                if tmp == 0:
-                    d = D[head_label]
-
-                else:
-                    module = head_label + str(dict_group[head_label] + 1)
-                    D[module] = B[head]
-                    d = D[module]
+                d = D[head_label]
 
 
                 """填槽，entity,label,idx"""
@@ -89,38 +80,6 @@ def struct_anti_parse(output_dict):
                 d[attr]["label"] = tail_label
                 idx_segment = text.find(segment)
                 d[attr]["idx"] = [text.find(tail, idx_segment), text.find(tail, idx_segment) + len(tail)]
-
-                li_head.append(head)
-                li_head_label.append(head_label)
-
-        # dict_group[head_label] = tmp + 1
-
-        try:
-            li_sort_head = list(set(li_head))
-            li_sort_head.sort(key=li_head.index)
-            head = li_sort_head[-1]
-
-            li_sort_head_label = list(set(li_head_label))
-            li_sort_head_label.sort(key=li_head_label.index)
-            head_label = li_sort_head_label[-1]
-
-            d["主体"] = {}
-            d["主体"]["entity"] = head
-            idx_sentence = text.find(segment)
-            d["主体"]["idx"] = [text.find(head, idx_sentence),
-                              text.find(head, idx_sentence) + len(head)]
-            d["主体"]["label"] = head
-
-            # li_head
-            #
-            # li_head = []
-            # li_head_entity = []
-            dict_group[head_label] = tmp + 1  # 完成一段的书写，追加1个头实体head的个数记录
-
-        except:
-            # print("\n"+"-"*100)
-            # print("li_head = []")
-            pass
 
 
     D["content"] = text
