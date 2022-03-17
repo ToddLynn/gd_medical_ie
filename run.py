@@ -25,6 +25,9 @@ from utils.finetuning_argparse import get_argparse
 from utils.utils import seed_everything, ProgressBar, init_logger, logger, decoding, write_prediction_results, \
     get_precision_recall_f1
 
+from tensorboardX import SummaryWriter
+import numpy as np
+
 
 class BCELossForDuIE(nn.Module):
     def __init__(self, ):
@@ -69,6 +72,9 @@ def train(args, train_iter, model):
     pbar = ProgressBar(n_total=len(train_iter), desc='Training')
     print("****" * 20)
     fgm = FGM(model, epsilon=1, emb_name='word_embeddings.weight')
+
+    writer = SummaryWriter()
+
     for step, batch in enumerate(train_iter):
         for key in batch.keys():
             batch[key] = batch[key].to(args.device)
@@ -86,12 +92,19 @@ def train(args, train_iter, model):
         loss.backward()
         #
         batch_loss += loss.item()
+
         pbar(step,
              {
                  'batch_loss': batch_loss / (step + 1),
              })
         optimizer.step()
         model.zero_grad()
+
+        # writer.add_scalars('scalar/loss', batch_loss, batch)
+    #     writer.add_scalars('scalar/loss', {"batch_loss":batch_loss/(step + 1)}, step)
+    # writer.close()
+        writer.add_scalars('scalar/loss', {"batch_loss":batch_loss/(step + 1)}, step)
+    writer.close()
 
 
 def evaluate(args, eval_iter, model, mode):
@@ -139,7 +152,8 @@ def evaluate(args, eval_iter, model, mode):
     write_prediction_results(formatted_outputs, predict_file_path)
 
     if mode == "eval":
-        precision, recall, f1 = get_precision_recall_f1("./data/kt_train_460.json", predict_file_path)
+        # precision, recall, f1 = get_precision_recall_f1("./data/kt_train_460.json", predict_file_path)
+        precision, recall, f1 = get_precision_recall_f1("./data/kt_dev_196.json", predict_file_path)
         return precision, recall, f1
     elif mode != "test":
         raise Exception("wrong mode for eval func")
@@ -174,7 +188,7 @@ def main():
     args.sep_token_id = tokenizer.sep_token_id
     args.pad_token_id = tokenizer.pad_token_id
 
-    #数据集处理和导入
+    # 数据集处理和导入
     # Dataset & Dataloader
     train_dataset = DuIEDataset(args,
                                 # json_path="data/duie_train_4000.json",
@@ -183,8 +197,9 @@ def main():
                                 tokenizer=tokenizer)
     eval_dataset = DuIEDataset(args,
                                json_path="data/kt_dev_196.json",
+                               # json_path="data/kt_train_460.json",
                                tokenizer=tokenizer)
-    # eval_dataset, test_dataset = random_split(eval_dataset,
+    # eval_dataset, test_dataset = random_split(eval_dataset,0
     #                                           [round(0.5 * len(eval_dataset)),
     #                                            len(eval_dataset) - round(0.5 * len(eval_dataset))],
     #                                           generator=torch.Generator().manual_seed(42))
@@ -217,6 +232,8 @@ def main():
     # 训练
     best_f1 = 0
     early_stop = 0
+
+
     for epoch, _ in enumerate(range(int(args.num_train_epochs))):
         model.train()
         train(args, train_iter, model)

@@ -1,3 +1,7 @@
+import numpy as np
+from tensorboardX import SummaryWriter
+
+
 # D = {
 #     "增生腺体": {
 #         "增生_侧别": {},
@@ -69,6 +73,22 @@
 
 # text ="1、左乳外上象限巨大低回声团,考虑BI-RADS:5类。2、右乳内上象限，BI-RADS2类。3、双侧腋下未见明显肿大淋巴结。"
 
-text =  "1.左乳9点低回声,BI-RADS3类。右乳外上象限无回声,BI-RADS2类。右侧腋下淋巴结肿大。"
+# text =  "1.左乳9点低回声,BI-RADS3类。右乳外上象限无回声,BI-RADS2类。右侧腋下淋巴结肿大。"
+#
+# print(text.find("腋下",4))
 
-print(text.find("腋下",4))
+
+#
+# writer = SummaryWriter(comment='base_scalar')
+# for epoch in range(100):
+#
+#     # 将我们所需要的数据保存在文件里面供可视化使用。 这里是Scalar类型，所以使用writer.add_scalar()
+#     # 第一个参数可以简单理解为保存图的名称，第二个参数是可以理解为Y轴数据，第三个参数可以理解为X轴数据
+#     writer.add_scalar('scalar/test', np.random.rand(), epoch)
+#     # writer.add_scalars('scalar/scalars_test', {'xsinx': epoch * np.sin(epoch), 'xcosx': epoch * np.cos(epoch)}, epoch)
+#     # writer.add_scalars('scalar/okc_test', {'xsinx': epoch **2}, epoch)
+#     # 当Y轴数据不止一个时，可以使用writer.add_scalars().运行代码之后生成文件之后，我们在runs同级目录下使用命令行
+# writer.close()
+#
+str1 = "1、双侧乳腺组织增生。2、双侧腋下未见明显肿大淋巴结。"
+num = str1.find("")

@@ -1,5 +1,5 @@
 """
-用于标注助手-反解析-模型自动标注新样本的接口
+用于知识提取-文本结构化提取展示的接口 -structured-show
 """
 
 
@@ -7,8 +7,7 @@ from flask import request, Flask, jsonify, make_response
 from flask_cors import CORS
 from predict import *
 import json
-# from structured_output import *
-from structured_index_output import *
+from structured_output import *
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
@@ -49,7 +48,7 @@ def post_Data():
 
                     # structured_dict:结构化输出
                     structured_dict = None
-                    structured_dict = structured_index_output(output_dict)
+                    structured_dict = structured_output(output_dict)
 
                     data = {
                         "annotation": output_dict,

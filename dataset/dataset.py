@@ -78,8 +78,8 @@ class DuIEDataset(Dataset):
                         #todo 为啥需要关系的ID，label_subject
                         #todo 为啥需要label_object
 
-                        print("label_subject:"+str(label_subject))
-                        print("label_object:"+str(label_object))
+                        # print("label_subject:"+str(label_subject))
+                        # print("label_object:"+str(label_object))
 
                         #头实体、尾实体，的特征化值
                         subject_tokens = tokenizer.encode_plus(spo['subject'], add_special_tokens=False)["input_ids"]
@@ -121,7 +121,7 @@ class DuIEDataset(Dataset):
                         for index in range(seq_len - object_tokens_len + 1):
                             if tokens[index: index + object_tokens_len] == object_tokens:
                                 #debug
-                                print(forbidden_index)
+                                # print(forbidden_index)
 
                                 if forbidden_index is None:
                                     labels[index][label_object] = 1
@@ -135,13 +135,13 @@ class DuIEDataset(Dataset):
                                 # check if labeled already
                                 elif index < forbidden_index or index >= forbidden_index + len(subject_tokens):
                                     # print(labels)
-                                    print("labels:" + str(len(labels)))
-                                    print("index:" + str(index))
-                                    print("label_object:" + str(label_object))
-                                    print("len(labels[index]):" + str(len(labels[index])))
-                                    print("labels[index]:" + str(labels[index]))
-                                    print("labels[index][label_object]:" + str(labels[index][label_object]))
-                                    print("-" * 100)
+                                    # print("labels:" + str(len(labels)))
+                                    # print("index:" + str(index))
+                                    # print("label_object:" + str(label_object))
+                                    # print("len(labels[index]):" + str(len(labels[index])))
+                                    # print("labels[index]:" + str(labels[index]))
+                                    # print("labels[index][label_object]:" + str(labels[index][label_object]))
+                                    # print("-" * 100)
 
                                     labels[index][label_object] = 1
                                     for i in range(object_tokens_len - 1):
