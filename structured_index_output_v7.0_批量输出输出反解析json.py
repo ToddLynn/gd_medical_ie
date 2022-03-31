@@ -106,18 +106,22 @@ def struct_anti_parse(output_dict):
 
         li_sub_qc = qc(li_subject)
         li_sub_label_qc = qc(li_subject_label)
-        sub = li_sub_qc[-1]
-        sub_label = li_sub_label_qc[-1]
 
-        d["主体"] = {}
-        d["主体"]["entity"] = sub
-        idx_sentence = text.find(segment)
-        d["主体"]["idx"] = [text.find(sub, idx_sentence),
-                          text.find(sub, idx_sentence) + len(sub)]
-        d["主体"]["label"] = sub_label
+        if li_sub_qc and li_sub_label_qc:
+            sub = li_sub_qc[-1]
+            sub_label = li_sub_label_qc[-1]
 
-        dict_sub[sub_label] = tmp + 1
+            d["主体"] = {}
+            d["主体"]["entity"] = sub
+            idx_sentence = text.find(segment)
+            d["主体"]["idx"] = [text.find(sub, idx_sentence),
+                              text.find(sub, idx_sentence) + len(sub)]
+            d["主体"]["label"] = sub_label
 
+            dict_sub[sub_label] = tmp + 1
+
+
+        li_subject,li_subject_label =[],[]
         # li_subject,li_subject_label,li_sub_qc,li_sub_label_qc =[],[],[],[]
 
     D["content"] = text
@@ -202,10 +206,10 @@ if __name__ == '__main__':
 
             output_anti_dict = struct_anti_parse(output_dict)
             print(output_anti_dict)
-            # li_output_antiparse.append(output_anti_dict)
-    # print(li_output_antiparse)
-    # output_anti_parse_file = "output/output_anti_parse_250.json"
-    # with open(output_anti_parse_file, "w", encoding="utf-8") as fb:
-    #     json.dump(li_output_antiparse, fb, ensure_ascii=False)
+            li_output_antiparse.append(output_anti_dict)
+    print(li_output_antiparse)
+    output_anti_parse_file = "output/output_anti_parse_250_0329.json"
+    with open(output_anti_parse_file, "w", encoding="utf-8") as fb:
+        json.dump(li_output_antiparse, fb, ensure_ascii=False)
 
 
