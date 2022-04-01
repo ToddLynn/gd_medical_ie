@@ -94,6 +94,12 @@
 # num = str1.find("")
 
 
-li =  []
+# li =  []
+#
+# print(li[0])
 
-print(li[0])
+dict4 = {'name': 'Tom', 'age': 18}
+del dict4['name']  # 删除字典，如果键不存在，返回错误
+print(dict4)
+# del dict4  # 删除整个字典
+# print(dict4)

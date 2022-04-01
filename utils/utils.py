@@ -328,6 +328,7 @@ def get_precision_recall_f1(golden_file, predict_file):
             format(golden_file, predict_file))
     result = r.read()
     print("test          ：    ", result)
+    print(type(result))
     r.close()
     d_result = json.loads(result)
     print("d_result  ",d_result)
