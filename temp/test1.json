@@ -1,0 +1,270 @@
+{
+  "text": "1、双侧乳腺组织增生。2、右侧乳腺6点处低回声(内见钙化灶及液性暗区),性质待定。BIRADS4a类。右侧乳晕旁低回声(内见钙化),性质待定。BIRADS4a类。左侧乳腺无回声,囊肿？其他待排。BIRADS3类。3、双侧腋下未见明显肿大淋巴结。",
+  "spo_list": [
+    {
+      "subject": "乳",
+      "subject_id": 3,
+      "object": {
+        "@value": "乳腺组织",
+        "id": 0
+      },
+      "predicate": "增生_表现",
+      "subject_type": "病灶",
+      "object_type": {
+        "@value": "腺体"
+      }
+    },
+    {
+      "subject": "未见明显肿大淋巴结",
+      "subject_id": 8,
+      "object": {
+        "@value": "低回声",
+        "id": 5
+      },
+      "predicate": "病灶_回声强度",
+      "subject_type": "淋巴结表现",
+      "object_type": {
+        "@value": "回声强度"
+      }
+    },
+    {
+      "subject": "右",
+      "subject_id": 12,
+      "object": {
+        "@value": "乳",
+        "id": 9
+      },
+      "predicate": "腋窝_淋巴结表现",
+      "subject_type": "侧别",
+      "object_type": {
+        "@value": "病灶"
+      }
+    },
+    {
+      "subject": "双",
+      "subject_id": 15,
+      "object": {
+        "@value": "双",
+        "id": 13
+      },
+      "predicate": "病灶_回声强度",
+      "subject_type": "侧别",
+      "object_type": {
+        "@value": "侧别"
+      }
+    },
+    {
+      "subject": "BIRADS3类",
+      "subject_id": 20,
+      "object": {
+        "@value": "低回声",
+        "id": 5
+      },
+      "predicate": "病灶_侧别",
+      "subject_type": "BI-RADS分类_超声",
+      "object_type": {
+        "@value": "回声强度"
+      }
+    },
+    {
+      "subject": "BIRADS4a类",
+      "subject_id": 19,
+      "object": {
+        "@value": "乳腺组织",
+        "id": 0
+      },
+      "predicate": "增生_侧别",
+      "subject_type": "BI-RADS分类_超声",
+      "object_type": {
+        "@value": "腺体"
+      }
+    },
+    {
+      "subject": "BIRADS4a类",
+      "subject_id": 17,
+      "object": {
+        "@value": "乳",
+        "id": 9
+      },
+      "predicate": "腋窝_侧别",
+      "subject_type": "BI-RADS分类_超声",
+      "object_type": {
+        "@value": "病灶"
+      }
+    },
+    {
+      "subject": "右",
+      "subject_id": 16,
+      "object": {
+        "@value": "双",
+        "id": 13
+      },
+      "predicate": "病灶_侧别",
+      "subject_type": "侧别",
+      "object_type": {
+        "@value": "侧别"
+      }
+    },
+    {
+      "subject": "无回声",
+      "subject_id": 22,
+      "object": {
+        "@value": "低回声",
+        "id": 5
+      },
+      "predicate": "病灶_钟面",
+      "subject_type": "回声强度",
+      "object_type": {
+        "@value": "回声强度"
+      }
+    },
+    {
+      "subject": "乳",
+      "subject_id": 21,
+      "object": {
+        "@value": "低回声",
+        "id": 5
+      },
+      "predicate": "病灶_BI-RADS分类",
+      "subject_type": "病灶",
+      "object_type": {
+        "@value": "回声强度"
+      }
+    }
+  ],
+  "entities": [
+    {
+      "start_idx": 4,
+      "end_idx": 8,
+      "type": "腺体",
+      "entity": "乳腺组织",
+      "id": 0
+    },
+    {
+      "start_idx": 8,
+      "end_idx": 10,
+      "type": "腺体表现",
+      "entity": "增生",
+      "id": 2
+    },
+    {
+      "start_idx": 15,
+      "end_idx": 16,
+      "type": "病灶",
+      "entity": "乳",
+      "id": 3
+    },
+    {
+      "start_idx": 20,
+      "end_idx": 23,
+      "type": "回声强度",
+      "entity": "低回声",
+      "id": 5
+    },
+    {
+      "start_idx": 110,
+      "end_idx": 112,
+      "type": "腋窝",
+      "entity": "腋下",
+      "id": 6
+    },
+    {
+      "start_idx": 112,
+      "end_idx": 121,
+      "type": "淋巴结表现",
+      "entity": "未见明显肿大淋巴结",
+      "id": 8
+    },
+    {
+      "start_idx": 53,
+      "end_idx": 54,
+      "type": "病灶",
+      "entity": "乳",
+      "id": 9
+    },
+    {
+      "start_idx": 56,
+      "end_idx": 59,
+      "type": "回声强度",
+      "entity": "低回声",
+      "id": 11
+    },
+    {
+      "start_idx": 51,
+      "end_idx": 52,
+      "type": "侧别",
+      "entity": "右",
+      "id": 12
+    },
+    {
+      "start_idx": 108,
+      "end_idx": 109,
+      "type": "侧别",
+      "entity": "双",
+      "id": 13
+    },
+    {
+      "start_idx": 81,
+      "end_idx": 82,
+      "type": "侧别",
+      "entity": "左",
+      "id": 14
+    },
+    {
+      "start_idx": 2,
+      "end_idx": 3,
+      "type": "侧别",
+      "entity": "双",
+      "id": 15
+    },
+    {
+      "start_idx": 13,
+      "end_idx": 14,
+      "type": "侧别",
+      "entity": "右",
+      "id": 16
+    },
+    {
+      "start_idx": 41,
+      "end_idx": 50,
+      "type": "BI-RADS分类_超声",
+      "entity": "BIRADS4a类",
+      "id": 17
+    },
+    {
+      "start_idx": 17,
+      "end_idx": 19,
+      "type": "钟面定位",
+      "entity": "6点",
+      "id": 18
+    },
+    {
+      "start_idx": 71,
+      "end_idx": 80,
+      "type": "BI-RADS分类_超声",
+      "entity": "BIRADS4a类",
+      "id": 19
+    },
+    {
+      "start_idx": 97,
+      "end_idx": 105,
+      "type": "BI-RADS分类_超声",
+      "entity": "BIRADS3类",
+      "id": 20
+    },
+    {
+      "start_idx": 83,
+      "end_idx": 84,
+      "type": "病灶",
+      "entity": "乳",
+      "id": 21
+    },
+    {
+      "start_idx": 85,
+      "end_idx": 88,
+      "type": "回声强度",
+      "entity": "无回声",
+      "id": 22
+    }
+  ]
+}

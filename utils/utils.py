@@ -327,9 +327,11 @@ def get_precision_recall_f1(golden_file, predict_file):
         'python ./re_official_evaluation.py --golden_file={} --predict_file={}'.
             format(golden_file, predict_file))
     result = r.read()
-    print("test", result)
+    print("test          ：    ", result)
     r.close()
     d_result = json.loads(result)
+    print("d_result  ",d_result)
+
     precision = d_result["precision"]
     recall = d_result["recall"]
     f1 = d_result["f1-score"]

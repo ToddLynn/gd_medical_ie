@@ -1,0 +1,60 @@
+{
+  "text": "1.双乳呈纤维腺体型。2.左乳外上象限所见，考虑BI-RADS0类，请结合其他影像检查明确诊断。3.右乳未见明显肿块或恶性钙化，考虑BI-RADS1类。注明：０类：此次钼靶为首次检查或乳腺癌术后复查，需要进一步的影像学检查I类：无明显肿块；２０－３５岁以下轻度增生II类：良性病变III类：良性可能性大，建议短期随访复查，病灶稳定，可归为BI-RADSII类IV类：肿块可疑恶性，必须活检V类：高度提示恶性，需做出正确处理VI类：活检已证实的恶性病变并经过合适的治疗处理",
+  "spo_list": [
+    {
+      "predicate": "病灶_评估分类",
+      "object_type": {
+        "@value": "BI-RADS分类_超声"
+      },
+      "subject_type": "病灶",
+      "object": {
+        "@value": "BI-RADS0类"
+      },
+      "subject": "乳"
+    },
+    {
+      "predicate": "病灶_象限",
+      "object_type": {
+        "@value": "象限定位"
+      },
+      "subject_type": "病灶",
+      "object": {
+        "@value": "外上象限"
+      },
+      "subject": "乳"
+    },
+    {
+      "predicate": "病灶_评估分类",
+      "object_type": {
+        "@value": "BI-RADS分类_超声"
+      },
+      "subject_type": "病灶",
+      "object": {
+        "@value": "BI-RADS1类"
+      },
+      "subject": "乳"
+    },
+    {
+      "predicate": "病灶_侧别",
+      "object_type": {
+        "@value": "侧别"
+      },
+      "subject_type": "病灶",
+      "object": {
+        "@value": "左"
+      },
+      "subject": "乳"
+    },
+    {
+      "predicate": "病灶_侧别",
+      "object_type": {
+        "@value": "侧别"
+      },
+      "subject_type": "病灶",
+      "object": {
+        "@value": "右"
+      },
+      "subject": "乳"
+    }
+  ]
+}

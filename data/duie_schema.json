@@ -19,3 +19,4 @@
 {"object_type": {"@value": "侧别"}, "predicate": "内乳_侧别", "subject_type": "锁骨下侧"}
 {"object_type": {"@value": "淋巴结表现"}, "predicate": "内乳_淋巴结表现", "subject_type": "锁骨下侧"}
 {"object_type": {"@value": "BI-RADS分类_超声"}, "predicate": "内乳_评估分类", "subject_type": "锁骨下侧"}
+{"object_type": {"@value": "回声强度"}, "predicate": "腋窝_回声强度", "subject_type": "腋窝"}
