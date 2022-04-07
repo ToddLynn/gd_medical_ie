@@ -71,7 +71,7 @@ def check_format(line):
             ret_code = SCHEMA_ERROR
             return ret_code, json_info
         if not all(
-            [required_key in spo_item for required_key in required_key_list]):
+                [required_key in spo_item for required_key in required_key_list]):
             ret_code = SCHEMA_ERROR
             return ret_code, json_info
         if not isinstance(spo_item['subject'], str) or \
@@ -149,6 +149,9 @@ def load_test_dataset(golden_filename):
             sent = json_info['text']
             spo_result = _parse_structured_ovalue(json_info)
             golden_dict[sent] = spo_result
+            # print("sent： ",sent)
+            # print("golden_dict： ",golden_dict)
+            # print("="*100)
     return ret_code, golden_dict
 
 
@@ -184,7 +187,7 @@ def del_duplicate(spo_list, alias_dict):
     return normalized_spo_list
 
 
-def is_spo_in_list(target_spo, golden_spo_list, alias_dict):
+def is_spo_in_list(target_spo, golden_spo_list, alias_dict):  # alias 别名
     """target spo是否在golden_spo_list中"""
     if target_spo in golden_spo_list:
         return True
@@ -226,31 +229,31 @@ def calc_pr(predict_filename, alias_filename, golden_filename):
     """calculate precision, recall, f1"""
     ret_info = {}
 
-    #load alias dict
+    # load alias dict
     ret_code, alias_dict = load_alias_dict(alias_filename)
     if ret_code != SUCCESS:
         ret_info['errorCode'] = ret_code
         ret_info['errorMsg'] = CODE_INFO[ret_code]
         return ret_info
-    #load test golden dataset
+    # load test golden dataset
     ret_code, golden_dict = load_test_dataset(golden_filename)
     if ret_code != SUCCESS:
         ret_info['errorCode'] = ret_code
         ret_info['errorMsg'] = CODE_INFO[ret_code]
         return ret_info
-    #load predict result
+    # load predict result
     ret_code, predict_result = load_predict_result(predict_filename)
     if ret_code != SUCCESS:
         ret_info['errorCode'] = ret_code
         ret_info['errorMsg'] = CODE_INFO[ret_code]
         return ret_info
 
-    #evaluation
+    # evaluation
     correct_sum, predict_sum, recall_sum, recall_correct_sum = 0.0, 0.0, 0.0, 0.0
     for sent in golden_dict:
-        golden_spo_list = del_duplicate(golden_dict[sent], alias_dict)
+        golden_spo_list = del_duplicate(golden_dict[sent], alias_dict)  # golden_dict
         predict_spo_list = predict_result.get(sent, list())
-        normalized_predict_spo = del_duplicate(predict_spo_list, alias_dict)
+        normalized_predict_spo = del_duplicate(predict_spo_list, alias_dict)  # del_duplicate：删除_重复
         recall_sum += len(golden_spo_list)
         predict_sum += len(normalized_predict_spo)
         for spo in normalized_predict_spo:
@@ -259,14 +262,14 @@ def calc_pr(predict_filename, alias_filename, golden_filename):
         for golden_spo in golden_spo_list:
             if is_spo_in_list(golden_spo, predict_spo_list, alias_dict):
                 recall_correct_sum += 1
-    sys.stderr.write('correct spo num = {}\n'.format(correct_sum))
-    sys.stderr.write('submitted spo num = {}\n'.format(predict_sum))
-    sys.stderr.write('golden set spo num = {}\n'.format(recall_sum))
-    sys.stderr.write('submitted recall spo num = {}\n'.format(recall_correct_sum))
+    sys.stderr.write('correct spo num = {}\n'.format(correct_sum))  # 正确的spo三元组数量；predict预测出来的spo
+    sys.stderr.write('submitted spo num = {}\n'.format(predict_sum))  # 提交的spo三元组数量；predict预测出来的spo
+    sys.stderr.write('golden set spo num = {}\n'.format(recall_sum))  # 召回的spo三元组数量；predict预测出来的spo
+    sys.stderr.write('submitted recall spo num = {}\n'.format(recall_correct_sum))  # 召回的spo三元组中，正确的spo三元组数量
     precision = correct_sum / predict_sum if predict_sum > 0 else 0.0
     recall = recall_correct_sum / recall_sum if recall_sum > 0 else 0.0
     f1 = 2 * precision * recall / (precision + recall) \
-            if precision + recall > 0 else 0.0
+        if precision + recall > 0 else 0.0
     precision = round(precision, 4)
     recall = round(recall, 4)
     f1 = round(f1, 4)
@@ -292,5 +295,5 @@ if __name__ == '__main__':
     # golden_file = "./data/duie_dev.json"
     # predict_file = "./output/eval_predictions.json"
     alias_filename = args.alias_file
-    ret_info = calc_pr(predict_filename, alias_filename, golden_filename)
+    ret_info = calc_pr(predict_filename, alias_filename, golden_filename)  # ret 子程序返回指令
     print(json.dumps(ret_info))
