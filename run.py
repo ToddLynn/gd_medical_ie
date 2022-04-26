@@ -175,6 +175,7 @@ def main():
     with open("./data/predicate2id.json", 'r', encoding='utf8') as fp:
         label_map = json.load(fp)
         """ label_map就是 predicate2id.json这个数据文件的.dict版本"""
+        """{"O":0,"I":1,"增生_侧别":2,"增生_表现":3,"导管_侧别":4,"导管_表现":5,"病灶_侧别":6,"病灶_象限":7,"病灶_钟面":8,"病灶_回声强度":9,"病灶_评估分类":10,"腋窝_侧别":11,"腋窝_淋巴结表现":12,"腋窝_评估分类":13,"锁骨上侧_侧别":14,"锁骨上_淋巴结表现":15,"锁骨上_评估分类":16,"锁骨下_侧别":17,"锁骨下_淋巴结表现":18,"锁骨下_评估分类":19,"内乳_侧别":20,"内乳_淋巴结表现":21,"内乳_评估分类":22}"""
     num_classes = (len(label_map.keys()) - 2) * 2 + 2
     """ num_classes = 44；len(label_map.keys())= 23"""
 
@@ -206,7 +207,8 @@ def main():
 
     """ train_iter 将数据集和采样器结合在一起，并提供了一个iterable over 给定的数据集。"""
     train_iter = DataLoader(train_dataset,
-                            shuffle=True,
+                            # shuffle=True,
+                            shuffle=False,
                             batch_size=args.per_gpu_train_batch_size,
                             collate_fn=collate_fn,
                             num_workers=0)

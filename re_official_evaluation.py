@@ -43,6 +43,7 @@ CODE_INFO = {
 
 def del_bookname(entity_name):
     """delete the book name"""
+    # print(entity_name)
     if entity_name.startswith(u'《') and entity_name.endswith(u'》'):
         entity_name = entity_name[1:-1]
     return entity_name
@@ -84,14 +85,20 @@ def check_format(line):
 def _parse_structured_ovalue(json_info):
     spo_result = []
     for item in json_info["spo_list"]:
+        # print(item)
         s = del_bookname(item['subject'].lower())
         o = {}
         for o_key, o_value in item['object'].items():
-            o_value = del_bookname(o_value).lower()
-            o[o_key] = o_value
+            if "@" in o_key:
+                o_value = del_bookname(o_value).lower()
+                o[o_key] = o_value
+
+                # print("o_key  :  " , o_key)
+                # print("o_value:  " , o_value)
         spo_result.append({"predicate": item['predicate'], \
                            "subject": s, \
                            "object": o})
+        # print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
     return spo_result
 
 
@@ -228,6 +235,9 @@ def calc_pr(predict_filename, alias_filename, golden_filename):
 
     #load alias dict
     ret_code, alias_dict = load_alias_dict(alias_filename)
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print(ret_code)
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     if ret_code != SUCCESS:
         ret_info['errorCode'] = ret_code
         ret_info['errorMsg'] = CODE_INFO[ret_code]
@@ -289,8 +299,19 @@ if __name__ == '__main__':
     args = parser.parse_args()
     golden_filename = args.golden_file
     predict_filename = args.predict_file
-    # golden_file = "./data/duie_dev.json"
-    # predict_file = "./output/eval_predictions.json"
     alias_filename = args.alias_file
     ret_info = calc_pr(predict_filename, alias_filename, golden_filename)
     print(json.dumps(ret_info))
+
+    """================================================================================="""
+
+    # golden_file = "./data/kt_dev_196.json"
+    # predict_file = "./output/eval_predictions.json"
+    #
+    # golden_filename = golden_file
+    # predict_filename = predict_file
+    # alias_filename = ""
+    # ret_info = calc_pr(predict_filename, alias_filename, golden_filename)
+    #
+    # print(ret_info)
+    # print(type(ret_info))

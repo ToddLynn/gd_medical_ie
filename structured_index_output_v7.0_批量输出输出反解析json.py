@@ -140,13 +140,12 @@ def head_value_replace_many():
 
     with open(path, "r", encoding="utf-8") as fb:
         li_output = fb.readlines()  # 把json读取到li_output里面，
-        print(len(li_output))
         for op in li_output:
             dict_op = json.loads(op)  # 把json str字符串,解码成dict : python对象。
 
             for spo in dict_op["spo_list"]:
                 if spo["subject_type"] == "病灶":
-                    spo["subject"] = "乳"  # 把subject值，强行改为“乳”
+                    spo["subject"] = "乳"  # 把subject值，不管是否是"乳腺组织"强行改为“乳”
 
             li_dict.append(dict_op)
 
@@ -208,7 +207,6 @@ if __name__ == '__main__':
             print(output_anti_dict)
             li_output_antiparse.append(output_anti_dict)
     print(li_output_antiparse)
-    # output_anti_parse_file = "output/output_anti_parse_375_0407.json"
     output_anti_parse_file = "output/output_anti_parse_375_0411.json"
     with open(output_anti_parse_file, "w", encoding="utf-8") as fb:
         json.dump(li_output_antiparse, fb, ensure_ascii=False)
