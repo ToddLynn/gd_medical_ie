@@ -235,9 +235,9 @@ def calc_pr(predict_filename, alias_filename, golden_filename):
 
     #load alias dict
     ret_code, alias_dict = load_alias_dict(alias_filename)
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    print(ret_code)
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    # print(ret_code)
+    # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     if ret_code != SUCCESS:
         ret_info['errorCode'] = ret_code
         ret_info['errorMsg'] = CODE_INFO[ret_code]
@@ -303,7 +303,7 @@ if __name__ == '__main__':
     ret_info = calc_pr(predict_filename, alias_filename, golden_filename)
     print(json.dumps(ret_info))
 
-    """================================================================================="""
+    # """================================================================================="""
 
     # golden_file = "./data/kt_dev_196.json"
     # predict_file = "./output/eval_predictions.json"
