@@ -1,10 +1,3 @@
-"""
-@Time : 2020/12/1110:44
-@Auth : 周俊贤
-@File ：run.py
-@DESCRIPTION:
-
-"""
 import json
 import os
 import time
@@ -52,9 +45,6 @@ def predict_re():
 
     # Dataset & Dataloader
     test_dataset = DuIEDataset(args,
-                               # json_path="./data/test/duie_test1.json",
-                               # json_path=r"F:\workspace_dl_env\gd_medical_ie\data\test\kt_test1.json",
-                               # json_path=r"F:\workspace_dl_env\gd_medical_ie\data\test\kt_test2.json",
                                json_path=r"data/input/input_content.json",
                                tokenizer=tokenizer)
 

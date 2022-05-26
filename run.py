@@ -1,10 +1,4 @@
-"""
-@Time : 2020/12/1110:44
-@Auth : 周俊贤
-@File ：run.py
-@DESCRIPTION:
 
-"""
 import copy
 import json
 import os
@@ -25,7 +19,7 @@ from utils.finetuning_argparse import get_argparse
 from utils.utils import seed_everything, ProgressBar, init_logger, logger, decoding, write_prediction_results, \
     get_precision_recall_f1
 
-from tensorboardX import SummaryWriter
+# from tensorboardX import SummaryWriter
 import numpy as np
 
 
@@ -73,7 +67,7 @@ def train(args, train_iter, model):
     print("****" * 20)
     fgm = FGM(model, epsilon=1, emb_name='word_embeddings.weight')
 
-    writer = SummaryWriter()
+    # writer = SummaryWriter()
 
     for step, batch in enumerate(train_iter):
         for key in batch.keys():
@@ -100,11 +94,8 @@ def train(args, train_iter, model):
         optimizer.step()
         model.zero_grad()
 
-        # writer.add_scalars('scalar/loss', batch_loss, batch)
     #     writer.add_scalars('scalar/loss', {"batch_loss":batch_loss/(step + 1)}, step)
     # writer.close()
-        writer.add_scalars('scalar/loss', {"batch_loss":batch_loss/(step + 1)}, step)
-    writer.close()
 
 
 def evaluate(args, eval_iter, model, mode):
@@ -152,7 +143,6 @@ def evaluate(args, eval_iter, model, mode):
     write_prediction_results(formatted_outputs, predict_file_path)
 
     if mode == "eval":
-        # precision, recall, f1 = get_precision_recall_f1("./data/kt_train_460.json", predict_file_path)
         precision, recall, f1 = get_precision_recall_f1("./data/kt_dev_196.json", predict_file_path)
         return precision, recall, f1
     elif mode != "test":
@@ -192,18 +182,12 @@ def main():
     # 数据集处理和导入
     # Dataset & Dataloader
     train_dataset = DuIEDataset(args,
-                                # json_path="data/duie_train_4000.json",
-                                # json_path="data/duie_train.json",
                                 json_path="data/kt_train_460.json",
                                 tokenizer=tokenizer)
     eval_dataset = DuIEDataset(args,
                                json_path="data/kt_dev_196.json",
-                               # json_path="data/kt_train_460.json",
                                tokenizer=tokenizer)
-    # eval_dataset, test_dataset = random_split(eval_dataset,0
-    #                                           [round(0.5 * len(eval_dataset)),
-    #                                            len(eval_dataset) - round(0.5 * len(eval_dataset))],
-    #                                           generator=torch.Generator().manual_seed(42))
+
 
     """ train_iter 将数据集和采样器结合在一起，并提供了一个iterable over 给定的数据集。"""
     train_iter = DataLoader(train_dataset,
@@ -218,12 +202,7 @@ def main():
                            batch_size=args.per_gpu_eval_batch_size,
                            collate_fn=collate_fn,
                            num_workers=0)
-    # num_workers=10)
-    # test_iter = DataLoader(test_dataset,
-    #                        shuffle=False,
-    #                        batch_size=args.per_gpu_eval_batch_size,
-    #                        collate_fn=collate_fn,
-    #                        num_workers=10)
+
     logger.info("The nums of the train_dataset features is {}".format(len(train_dataset)))
     logger.info("The nums of the eval_dataset features is {}".format(len(eval_dataset)))
 

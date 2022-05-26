@@ -1,11 +1,5 @@
-"""
-函数封装
-"""
-
 import re
 import copy
-
-
 
 
 def structured_output(output_dict):
@@ -34,10 +28,10 @@ def structured_output(output_dict):
         for spo in li_spo:
             span = spo["object"]["@value"]  # "尾实体对应的文本-字词片段"
 
-            attr = spo["predicate"]         # "尾实体对应的属性名"
-            head = spo["subject_type"]      # "尾实体对应的头实体"
+            attr = spo["predicate"]  # "尾实体对应的属性名"
+            head = spo["subject_type"]  # "尾实体对应的头实体"
 
-            tmp = dict_head.get(head, 0)    # 获取 -当前字典中头实体head的个数
+            tmp = dict_head.get(head, 0)  # 获取 -当前字典中头实体head的个数
 
             "如果词语在第一段句子中"
             if span in sentence:
@@ -66,11 +60,4 @@ def structured_output(output_dict):
             # print("li_head = []")
             pass
 
-
     return D
-
-
-
-
-
-

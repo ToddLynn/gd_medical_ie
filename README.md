@@ -10,7 +10,7 @@
 # 运行
 启动  
 ```
-python app.py
+python app_struct_show.py
 --max_len=150 --model_name_or_path="./data/zhoujx/prev_trained_model/chinese_roberta_wwm_ext_pytorch" --per_gpu_eval_batch_size=2 --output_dir="./output" --fine_tunning_model="./output/best_model.pkl"
 ```
 
@@ -19,11 +19,11 @@ python app.py
 
 # 展示示例
 ```
-1.左乳2点低回声,BI-RADS3类。
-1.左乳9点低回声,BI-RADS3类。右乳外上象限无回声,BI-RADS2类。右侧腋下淋巴结肿大。
-1.右乳约9-10点不均质极低回声,考虑炎性可能。2、双腋下未见明显肿大淋巴结。
 1、双侧乳腺组织呈增生改变。2、右侧腋下未见明显肿大淋巴结。
-1、左乳外上象限巨大低回声团,考虑BI-RADS:5类。2、右乳内上象限，BI-RADS2类。3、双侧腋下未见明显肿大淋巴结。
+1、左乳外上象限巨大低回声团,考虑BI-RADS:5类。2、右乳BI-RADS2类。3、双侧腋下未见明显肿大淋巴结。
+1、双侧乳腺组织增生。2、左侧乳腺2点极低回声:BI-RADS3类。3、右侧腋下淋巴结可见。
+1、双侧乳腺组织增生。BI-RADS3类。右乳导管局限性扩张。 2、左侧腋下未见明显肿大淋巴结。
+1、双侧乳腺组织增生。2、左乳低回声结节,BI-RADS3类。3、右乳多发囊性暗区,BI-RADS2类。
 ```
 
 
