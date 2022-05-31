@@ -91,4 +91,10 @@ def post_Data():
 
 
 if __name__ == '__main__':
+    # max_len = 150
+    # model_name_or_path = "./data/zhoujx/prev_trained_model/chinese_roberta_wwm_ext_pytorch"
+    # per_gpu_eval_batch_size = 2
+    # output_dir = "./output"
+    # fine_tunning_model = "./output/best_model.pkl"
+
     app.run(debug=False, host='0.0.0.0', port=8080)

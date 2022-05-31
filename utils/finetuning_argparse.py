@@ -23,6 +23,10 @@ def get_argparse():
     # 预测时
     parser.add_argument("--n_best_size", type=int, default=5, help="The total number of n-best predictions to generate in the nbest_predictions.json output file.")
     parser.add_argument("--max_answer_length", type=int, default=150, help="Max answer length.")
-    parser.add_argument("--cls_threshold", type=float, default=0.5, help="No answer threshold")
+    # parser.add_argument("--max_len", default=150, type=int, help="最大长度")
+    # parser.add_argument("--model_name_or_path", default="./data/zhoujx/prev_trained_model/chinese_roberta_wwm_ext_pytorch", type=str, help="预训练模型的路径")
+    # parser.add_argument("--per_gpu_eval_batch_size", default=2, type=int, help="验证Batch size的大小")
+    # parser.add_argument("--output_dir", default="./output", type=str, help="保存模型的路径")
+    # parser.add_argument("--fine_tunning_model", default="./output/best_model.pkl", type=str, help="fine_tuning model path")
 
     return parser

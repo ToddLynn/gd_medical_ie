@@ -1,10 +1,4 @@
-"""
-@Time : 2021/4/98:43
-@Auth : 周俊贤
-@File ：dataset.py
-@DESCRIPTION:
 
-"""
 
 import json
 import torch
