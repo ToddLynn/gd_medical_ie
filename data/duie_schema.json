@@ -1,21 +1,189 @@
-{"object_type": {"@value": "侧别"}, "predicate": "增生_侧别", "subject_type": "增生腺体"}
-{"object_type": {"@value": "乳腺组织改变"}, "predicate": "增生_表现", "subject_type": "增生腺体"}
-{"object_type": {"@value": "侧别"}, "predicate": "导管_侧别", "subject_type": "导管"}
-{"object_type": {"@value": "导管表现"}, "predicate": "导管_表现", "subject_type": "导管"}
-{"object_type": {"@value": "侧别"}, "predicate": "病灶_侧别", "subject_type": "病灶"}
-{"object_type": {"@value": "象限定位"}, "predicate": "病灶_象限", "subject_type": "病灶"}
-{"object_type": {"@value": "钟面定位"}, "predicate": "病灶_钟面", "subject_type": "病灶"}
-{"object_type": {"@value": "回声强度"}, "predicate": "病灶_回声强度", "subject_type": "病灶"}
-{"object_type": {"@value": "BI-RADS分类_超声"}, "predicate": "病灶_评估分类", "subject_type": "病灶"}
-{"object_type": {"@value": "侧别"}, "predicate": "腋窝_侧别", "subject_type": "腋窝"}
-{"object_type": {"@value": "淋巴结表现"}, "predicate": "腋窝_淋巴结表现", "subject_type": "腋窝"}
-{"object_type": {"@value": "BI-RADS分类_超声"}, "predicate": "腋窝_淋巴结表现", "subject_type": "腋窝"}
-{"object_type": {"@value": "侧别"}, "predicate": "锁骨上侧_侧别", "subject_type": "锁骨上侧"}
-{"object_type": {"@value": "淋巴结表现"}, "predicate": "锁骨上_淋巴结表现", "subject_type": "锁骨上侧"}
-{"object_type": {"@value": "BI-RADS分类_超声"}, "predicate": "锁骨上_评估分类", "subject_type": "锁骨上侧"}
-{"object_type": {"@value": "侧别"}, "predicate": "锁骨下_侧别", "subject_type": "锁骨下侧"}
-{"object_type": {"@value": "淋巴结表现"}, "predicate": "锁骨下_淋巴结表现", "subject_type": "锁骨下侧"}
-{"object_type": {"@value": "BI-RADS分类_超声"}, "predicate": "锁骨下_评估分类", "subject_type": "锁骨下侧"}
-{"object_type": {"@value": "侧别"}, "predicate": "内乳_侧别", "subject_type": "锁骨下侧"}
-{"object_type": {"@value": "淋巴结表现"}, "predicate": "内乳_淋巴结表现", "subject_type": "锁骨下侧"}
-{"object_type": {"@value": "BI-RADS分类_超声"}, "predicate": "内乳_评估分类", "subject_type": "锁骨下侧"}
+{
+  "object_type": {
+    "@value": "子宫_大小"
+  },
+  "predicate": "子宫_大小",
+  "subject_type": "子宫"
+}
+{
+  "object_type": {
+    "@value": "子宫_边缘"
+  },
+  "predicate": "子宫_边缘",
+  "subject_type": "子宫"
+}
+{
+  "object_type": {
+    "@value": "子宫_位置"
+  },
+  "predicate": "子宫_位置",
+  "subject_type": "子宫"
+}
+{
+  "object_type": {
+    "@value": "子宫_形状"
+  },
+  "predicate": "子宫_形状",
+  "subject_type": "子宫"
+}
+{
+  "object_type": {
+    "@value": "回声均匀度"
+  },
+  "predicate": "子宫_回声均匀度",
+  "subject_type": "子宫"
+}
+{
+  "object_type": {
+    "@value": "厚度"
+  },
+  "predicate": "子宫内膜_厚度",
+  "subject_type": "子宫"
+}
+{
+  "object_type": {
+    "@value": "CDFI表现"
+  },
+  "predicate": "CDFI表现",
+  "subject_type": "CDFI"
+}
+{
+  "object_type": {
+    "@value": "侧别"
+  },
+  "predicate": "附件_侧别",
+  "subject_type": "附件"
+}
+{
+  "object_type": {
+    "@value": "附件_回声表现"
+  },
+  "predicate": "附件_回声表现",
+  "subject_type": "附件"
+}
+{
+  "object_type": {
+    "@value": "回声大小"
+  },
+  "predicate": "附件_回声大小",
+  "subject_type": "附件"
+}
+{
+  "object_type": {
+    "@value": "回声强度"
+  },
+  "predicate": "附件_回声强度",
+  "subject_type": "附件"
+}
+{
+  "object_type": {
+    "@value": "边界表现"
+  },
+  "predicate": "附件_边界表现",
+  "subject_type": "附件"
+}
+{
+  "object_type": {
+    "@value": "囊壁表现"
+  },
+  "predicate": "附件_囊壁表现",
+  "subject_type": "附件"
+}
+{
+  "object_type": {
+    "@value": "回声数量"
+  },
+  "predicate": "附件_回声数量",
+  "subject_type": "附件"
+}
+{
+  "object_type": {
+    "@value": "回声类型"
+  },
+  "predicate": "附件_回声类型",
+  "subject_type": "附件"
+}
+{
+  "object_type": {
+    "@value": "回声均匀度"
+  },
+  "predicate": "附件_回声均匀度",
+  "subject_type": "附件"
+}
+{
+  "object_type": {
+    "@value": "边界表现"
+  },
+  "predicate": "子宫肌层_边界表现",
+  "subject_type": "子宫肌层"
+}
+{
+  "object_type": {
+    "@value": "囊壁表现"
+  },
+  "predicate": "子宫肌层_囊壁表现",
+  "subject_type": "子宫肌层"
+}
+{
+  "object_type": {
+    "@value": "回声强度"
+  },
+  "predicate": "子宫肌层_回声强度",
+  "subject_type": "子宫肌层"
+}
+{
+  "object_type": {
+    "@value": "回声数量"
+  },
+  "predicate": "子宫肌层_回声数量",
+  "subject_type": "子宫肌层"
+}
+{
+  "object_type": {
+    "@value": "回声大小"
+  },
+  "predicate": "子宫肌层_回声大小",
+  "subject_type": "子宫肌层"
+}
+{
+  "object_type": {
+    "@value": "回声类型"
+  },
+  "predicate": "子宫肌层_回声类型",
+  "subject_type": "子宫肌层"
+}
+{
+  "object_type": {
+    "@value": "回声均匀度"
+  },
+  "predicate": "回声均匀度",
+  "subject_type": "子宫肌层"
+}
+{
+  "object_type": {
+    "@value": "回声大小"
+  },
+  "predicate": "宫颈_回声大小",
+  "subject_type": "宫颈"
+}
+{
+  "object_type": {
+    "@value": "宫颈_回声数量"
+  },
+  "predicate": "宫颈_回声数量",
+  "subject_type": "宫颈"
+}
+{
+  "object_type": {
+    "@value": "回声强度"
+  },
+  "predicate": "宫颈_回声强度",
+  "subject_type": "宫颈"
+}
+{
+  "object_type": {
+    "@value": "边界表现"
+  },
+  "predicate": "宫颈_边界表现",
+  "subject_type": "宫颈"
+}

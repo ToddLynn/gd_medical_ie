@@ -88,7 +88,8 @@ class DuIEDataset(Dataset):
                     else:
                         # complex relation
                         label_subject = label_map[spo['predicate'] + '_' + spo_object]
-                        label_object = label_subject + 21
+                        label_object = label_subject + 27
+                        # label_object = label_subject + 21
                         # label_object = label_subject + 55
                         subject_tokens = tokenizer.encode_plus(spo['subject'], add_special_tokens=False)["input_ids"]
                         object_tokens = tokenizer.encode_plus(spo['object'][spo_object], add_special_tokens=False)[
@@ -208,6 +209,7 @@ def collate_fn(batch):
 if __name__ == '__main__':
     args = get_argparse().parse_args()
     # tokenizer = BertTokenizerFast.from_pretrained("/data/zhoujx/prev_trained_model/rbt3")
-    tokenizer = BertTokenizerFast.from_pretrained("/data/zhoujx/prev_trained_model/chinese_roberta_wwm_ext_pytorch")
+    tokenizer = BertTokenizerFast.from_pretrained("../data/zhoujx/prev_trained_model/chinese_roberta_wwm_ext_pytorch")
+    # dataset = DuIEDataset(args, "../data/zhoujx/kt_train_460.json", tokenizer)
     dataset = DuIEDataset(args, "../data/kt_train_460.json", tokenizer)
     a = 1
