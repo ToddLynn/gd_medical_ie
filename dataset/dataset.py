@@ -205,5 +205,5 @@ if __name__ == '__main__':
     # tokenizer = BertTokenizerFast.from_pretrained("/data/zhoujx/prev_trained_model/rbt3")
     tokenizer = BertTokenizerFast.from_pretrained("../data/zhoujx/prev_trained_model/chinese_roberta_wwm_ext_pytorch")
     # dataset = DuIEDataset(args, "../data/zhoujx/kt_train_460.json", tokenizer)
-    dataset = DuIEDataset(args, "../data/kt_train_460.json", tokenizer)
+    dataset = DuIEDataset(args, "../data/train_data_870.json", tokenizer)
     a = 1
